@@ -20,8 +20,7 @@ The second canvas is the heart of interaction with the user. The users will be p
 When fake news is introduced to the virtual environment, some agents will start spreading the misinformation and influencing other agents contributing to the spread of misinformation.
 Conversely, if real news is introduced to the world, agents will spread the information between their neighbours, which will help to “heal” the misinformation sickness of the others.
 
-
-## Challenge
+## Challenge
 As stated before, people need to be actively educated in order to prevent the spread of misinformation, and not receiving any news from the outside will increase the overall misinformation level, so not sending any news to the environment for a long time is not a viable strategy to prevent spread of misinformation.
 These three actions, receiving real news, receiving fake news, not receiving any news will be tuned in order to let the system behave in a complex way and with continuous evolution maintaining an equilibrium that slowly shifts with time and as a consequence of interaction of the choices of its users.
 
