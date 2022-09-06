@@ -25,11 +25,12 @@ As stated before, people need to be actively educated in order to prevent the sp
 
 These three actions, receiving real news, receiving fake news, not receiving any news will be tuned in order to let the system behave in a complex way and with continuous evolution maintaining an equilibrium that slowly shifts with time and as a consequence of interaction of the choices of its users.
 
-## References
-[1] - https://www.degruyter.com/document/doi/10.1515/krt-2021-0019/html?lang=en
-[2] - https://economics.mit.edu/files/23155
-[3] - https://www.frontiersin.org/articles/10.3389/fpsyg.2022.797904/full
-[4] - https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0203958
+## References 
+
+[1] - https://www.degruyter.com/document/doi/10.1515/krt-2021-0019/html?lang=en \
+[2] - https://economics.mit.edu/files/23155 \
+[3] - https://www.frontiersin.org/articles/10.3389/fpsyg.2022.797904/full \
+[4] - https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0203958 \
 
 
 
