@@ -5,7 +5,7 @@ import org.jbox2d.dynamics.*;
 import org.jbox2d.dynamics.contacts.*;
 
 int RADIUS_BOID=20;
-float SCALEFORCE=5000;
+float SCALEFORCE=2000;
 float DIST_TO_NEXT=50;
 String filenames[];
 Box2DProcessing box2d;
