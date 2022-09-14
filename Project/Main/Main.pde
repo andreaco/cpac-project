@@ -24,6 +24,7 @@ CircleShape cs;
  * Agents Collections
  */
 ArrayList<Agent> agents;
+City city;
 
 /**
  * Constants
@@ -51,7 +52,7 @@ void setup() {
   // Agent Collection
   agents = new ArrayList<Agent>();
   
-  
+  city = new City(40, 40);
 }
 
 
@@ -80,12 +81,19 @@ void oscEvent(OscMessage theOscMessage) {
 }
 
 void draw() {
-  fill(0,50);
+  
+  fill(0,100);
+  
   rect(0, 0, width, height);
+  
   box2d.step();
+  
   //boundaries.draw();
+  
   for (Agent b : agents) {
     b.update(agents);
     b.draw();
   }
+  
+  city.draw();
 }
