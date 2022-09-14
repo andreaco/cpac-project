@@ -4,6 +4,7 @@ import org.jbox2d.common.*;
 import org.jbox2d.dynamics.*;
 import org.jbox2d.dynamics.contacts.*;
 
+Box2DProcessing box2d;
 
 int ROWS = 20;
 int COLS = 20;
