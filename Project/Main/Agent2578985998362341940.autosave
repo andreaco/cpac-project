@@ -1,11 +1,12 @@
 /*
  * Agent Constants
  */
-float BOID_AVOID_DIST=3;
-float WALL_AVOID_DIST=1;
-float ALIGN_DIST=3;
-float TALK_DIST=0;
-float MAX_VEL = 3;
+int LIMIT_VELOCITY=50;
+float maxspeed = 1;
+float BOID_AVOID_DIST=10;
+float WALL_AVOID_DIST=5;
+float ALIGN_DIST=0;
+float TALK_DIST=5;
 
 class Agent {
     // Agent Properties
@@ -14,8 +15,8 @@ class Agent {
     
     color defColor = color(200, 200, 200);
     color contactColor;
-    boolean talking; // determines if the boid is talking to others
-    Agent partner;
+    boolean talking; // determines if the Agent is talking to others
+    Agent partner;   // who is the Agent talking to
     
     // Constructor
     Agent(Box2DProcessing  box2d, CircleShape ps, BodyDef bd, Vec2 position){
@@ -37,14 +38,7 @@ class Agent {
     
     // Apply Force Utility Function
     void applyForce(Vec2 force){
-      this.body.applyForce(force, this.body.getWorldCenter());
-      
-      // Impose a maximum velocity
-      Vec2 vel = this.body.getLinearVelocity();
-      float speed = vel.length(); // magnitude of the vector
-      if ( speed > MAX_VEL ){ 
-        vel.normalize();
-        this.body.setLinearVelocity( vel.mul(MAX_VEL) );}
+      this.body.applyForce(force, this.body.getWorldCenter());      
     }
     
     // Rendering function
@@ -59,7 +53,7 @@ class Agent {
     }
     
     // Update function
-    void update(ArrayList<Agent> agents, ArrayList<Wall> walls){
+    void update(ArrayList<Agent> agents){
       // Temporary Variables
       Vec2 myPosW = this.body.getPosition();
       Vec2 myVel  = this.body.getLinearVelocity().clone();
@@ -85,7 +79,7 @@ class Agent {
          * Avoid other agents that closer than AVOID_DIST
          */
         if(direction.length() < BOID_AVOID_DIST & this.talking == false){
-          m = 1/direction.clone().normalize();
+          m = 20/direction.clone().normalize();
           avoid_force.addLocal(direction.mul(-m));
         }
         
@@ -101,12 +95,12 @@ class Agent {
           otherVel.normalize();
           otherVel.mulLocal(2);
           align_force.addLocal(otherVel);
-          //println("aligning to other agents");
+          //println("Aligning to other boids");
         }
         
-        
-        // TALKING
-         
+        /**
+         * TALKING
+         */
         if(direction.length()<TALK_DIST & this.talking == false & other.talking == false){
             if(random(100) < 1){
               this.talking = true;
@@ -135,25 +129,28 @@ class Agent {
           }
           
         } // End Talking
+        
       } // End For Loop
       
+      /*
+      Avoid Boundaries
       
-      //Avoid Boundaries
-      
-      for(int i=0; i<walls.size(); i++){
+      for(int i=0; i<walls.bodies.length; i++){
         Vec2 distance2 = new Vec2(0,0);
         Fixture wallsFix;
         float distance;
-        wallsFix = walls.get(i).b.getFixtureList();
+        wallsFix = walls.bodies[i].getFixtureList();
         distance = wallsFix.computeDistance(myPosW,10,distance2); //distance 2 is the vector normal to the boundary?
+        //println(" wallPos " + i + " = " + walls.bodies.length);
         
         if(distance<WALL_AVOID_DIST & this.talking == false){
           //direction.normalize();
-          m = 1/distance;
+          m = 150/distance;
           avoid_force.addLocal(distance2.mul(m)); // 
           //println("Avoiding other boid!");
         }
       } // End Boundaries
+      */
       
       
       // Apply forces

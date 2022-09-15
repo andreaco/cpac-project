@@ -95,7 +95,6 @@ class Boid{
             damping.mulLocal(-10);
             stop_force.addLocal(damping);
             this.defColor = color(200, 50, 50);
-            println("myVel " + myVel);
           }
           else{
             if(random(100) < 0.05){

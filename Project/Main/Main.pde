@@ -30,7 +30,7 @@ City city;
  * Constants
  */
 int RADIUS_AGENT = 10;
-int SCALEFORCE = 2000;
+int SCALEFORCE = 200;
 
 void setup() {
   size(720, 720);
@@ -69,14 +69,14 @@ void mousePressed() {
   }
   
   for (Agent agent : agents) {
-    agent.update(agents);
+    agent.update(agents, city.walls);
   }
 }
 
 void oscEvent(OscMessage theOscMessage) {
   println("Received an osc message.");
   for (Agent agent : agents) {
-    agent.update(agents);
+    agent.update(agents, city.walls);
   }
 }
 
@@ -91,7 +91,7 @@ void draw() {
   //boundaries.draw();
   
   for (Agent b : agents) {
-    b.update(agents);
+    b.update(agents, city.walls);
     b.draw();
   }
   
