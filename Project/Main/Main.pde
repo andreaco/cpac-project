@@ -81,7 +81,7 @@ void oscEvent(OscMessage theOscMessage) {
 }
 
 void draw() {
-  
+  city.draw();
   fill(0,100);
   
   rect(0, 0, width, height);
@@ -95,5 +95,5 @@ void draw() {
     b.draw();
   }
   
-  city.draw();
+  
 }

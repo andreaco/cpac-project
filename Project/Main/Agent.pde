@@ -1,9 +1,9 @@
 /*
  * Agent Constants
  */
-float BOID_AVOID_DIST=10;
-float WALL_AVOID_DIST=5;
-float ALIGN_DIST=0;
+float BOID_AVOID_DIST=5;
+float WALL_AVOID_DIST=0;
+float ALIGN_DIST=10;
 float TALK_DIST=5;
 
 class Agent {
@@ -98,7 +98,7 @@ class Agent {
         
         /**
          * TALKING
-         */
+         
         if(direction.length()<TALK_DIST & this.talking == false & other.talking == false){
             if(random(100) < 1){
               this.talking = true;
@@ -127,7 +127,7 @@ class Agent {
           }
           
         } // End Talking
-        
+        */
       } // End For Loop
       
       /*
