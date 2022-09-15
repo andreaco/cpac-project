@@ -1,11 +1,11 @@
 /*
  * Agent Constants
  */
-float BOID_AVOID_DIST=3;
+float BOID_AVOID_DIST=1;
 float WALL_AVOID_DIST=1;
-float ALIGN_DIST=3;
+float ALIGN_DIST=2;
 float TALK_DIST=0;
-float MAX_VEL = 3;
+float MAX_VEL = 0.1;
 
 class Agent {
     // Agent Properties
@@ -101,6 +101,7 @@ class Agent {
           otherVel.normalize();
           otherVel.mulLocal(2);
           align_force.addLocal(otherVel);
+          
           //println("aligning to other agents");
         }
         

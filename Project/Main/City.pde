@@ -72,7 +72,7 @@ class City {
 
         // Rigid bodies
         if (citySkeleton[row][col] == WALL) {
-          Wall wall = new Wall(col*blockWidth, row*blockHeight, blockWidth, blockHeight);
+          Wall wall = new Wall(col*blockWidth, row*blockHeight, blockWidth*1.1, blockHeight*1.1);
           walls.add(wall);
         }
       } // End For Cols
@@ -99,7 +99,7 @@ class Wall {
 
   float x, y;
   float w, h;
-  color c = #444482;
+  color c = #444444;
 
   Body b;
   
@@ -129,11 +129,12 @@ class Wall {
   }
 
   void display() {
-    stroke(0);
+
+    noStroke();
     fill(c);
     int currentRectMode = getGraphics().rectMode;
     rectMode(CENTER);
-    rect(x, y, w, h);
+    rect(x, y, w*1.1, h*1.1, 10);
     rectMode(currentRectMode);
   }
 }

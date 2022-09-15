@@ -29,11 +29,11 @@ City city;
 /**
  * Constants
  */
-int RADIUS_AGENT = 10;
+int RADIUS_AGENT = 3;
 int SCALEFORCE = 200;
 
 void setup() {
-  size(720, 720);
+  size(860, 720, P3D);
   
   // Initialize OSC objects and address
   oscP5 = new OscP5(this, 12000);
@@ -51,21 +51,39 @@ void setup() {
   
   // Agent Collection
   agents = new ArrayList<Agent>();
+
   
-  city = new City(40, 40);
+  city = new City(30, 30);
+  
+  int STARTING_AGENTS = 300; 
+  for (int i=0; i < STARTING_AGENTS; ++i) {
+    int col = int(random(city.numCols));
+    int row = int(random(city.numRows));
+    
+    if (city.citySkeleton[col][row] == STREET){
+      insertNewAgent(row*city.blockWidth, col*city.blockHeight);
+    }
+    
+    
+  }
 }
 
 
-void mousePressed() {
-  //insert a new box
- if(mouseButton == LEFT){
-    Agent b = new Agent(box2d, cs, bd, P2W(mouseX, mouseY));
+void insertNewAgent(float x, float y) {
+  
+    Agent b = new Agent(box2d, cs, bd, P2W(x, y));
     
     // initial random force
     Vec2 force = new Vec2(random(-1,1), random(-1,1));     
     b.applyForce(force.mul(SCALEFORCE));
     
     agents.add(b);     
+}
+
+void mousePressed() {
+  //insert a new box
+  if(mouseButton == LEFT){
+    insertNewAgent(mouseX, mouseY);
   }
   
   for (Agent agent : agents) {
@@ -81,6 +99,8 @@ void oscEvent(OscMessage theOscMessage) {
 }
 
 void draw() {
+  
+  
   city.draw();
   fill(0,100);
   
