@@ -7,15 +7,11 @@ int[][] WORLD;
 int HOUSE = 0;
 int STREET = 1;
 
-int peepX[], peepY[], peepC[];
 int NPEEPS = 10;
 void setup() {
   size(800, 800);
   
   WORLD = new int[COLS][ROWS];
-  peepX = new int[NPEEPS];
-  peepY = new int[NPEEPS];
-  peepC = new int[NPEEPS];
   
   int nwalkers = ROWS;
   int nsteps =ROWS;
@@ -52,12 +48,6 @@ void setup() {
         WORLD[row][col] = STREET;
     }
   }
-  
-  for (int p=0; p<NPEEPS; ++p) {
-    peepX[p] = int(random(COLS));
-    peepY[p] = int(random(ROWS));
-    peepC[p] = color(random(255),random(255),random(255));
-  }
 
   
   
@@ -81,36 +71,18 @@ void draw() {
     }
   }
   
-  for (int p=0; p<NPEEPS; ++p) {
-    for (int i=0; i<1; ++i) {
-      int randomDirection =(int)random(4);
-      int oldX = peepX[p], oldY = peepY[p];
-      final int N=0, E=1, S=2, W=3;
-      switch(randomDirection) {
-        case N:
-          peepY[p] -= 1;
-          peepY[p] = abs(peepY[p]%ROWS);
-          break;
-        case S:
-          if (peepY[p] < ROWS) {
-            peepY[p] += 1;
-            peepY[p] = abs(peepY[p]%ROWS);
-          }
-          break;
-        case E:
-          peepX[p] += 1;
-          peepX[p] = abs(peepX[p]%COLS);
-          break;
-        case W:
-          peepX[p] -= 1;
-          peepX[p] = abs(peepX[p]%COLS);
-      } 
-      if (WORLD[peepX[p]][peepY[p]] != STREET){
-        peepX[p] = oldX; peepY[p] = oldY;
-      }
-     
-    }
-    fill(peepC[p]);
-    ellipse(peepX[p]*blockWidth, peepY[p]*blockHeight, 10, 10);
+}
+
+void mousePressed() {
+  int x = int(COLS * mouseX / width);
+  int y = int(ROWS * mouseY / width);
+  
+  if (WORLD[x][y] == STREET) {
+    WORLD[x][y] = HOUSE;
   }
+  else {
+    WORLD[x][y] = STREET;
+  }
+   
+  
 }

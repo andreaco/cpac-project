@@ -63,9 +63,9 @@ void setup() {
     if (city.citySkeleton[col][row] == STREET){
       insertNewAgent(row*city.blockWidth, col*city.blockHeight);
     }
-    
-    
   }
+  agents.get(0).awareness = +1.0f;
+  agents.get(1).awareness = -1.0f;
 }
 
 

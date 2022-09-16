@@ -3,6 +3,7 @@
  */
 float BOID_AVOID_DIST=1;
 float WALL_AVOID_DIST=1;
+float INFECT_DIST = 1;
 float ALIGN_DIST=2;
 float TALK_DIST=0;
 float MAX_VEL = 0.1;
@@ -16,6 +17,8 @@ class Agent {
     color contactColor;
     boolean talking; // determines if the boid is talking to others
     Agent partner;
+    
+    float awareness;
     
     // Constructor
     Agent(Box2DProcessing  box2d, CircleShape ps, BodyDef bd, Vec2 position){
@@ -33,6 +36,7 @@ class Agent {
       
       // Agent Variables
       this.talking = false;
+      this.awareness = 0.0f;
     }
     
     // Apply Force Utility Function
@@ -53,7 +57,15 @@ class Agent {
       Vec2 posPixel = this.box2d.getBodyPixelCoord(this.body);
      
       // Draw Ellipse
-      fill(this.defColor);
+      if (awareness > 0.5f) {
+        fill(255, 0, 0);
+      }
+      else if (awareness < -0.5f) {
+        fill(0, 255, 0);
+      }
+      else {
+        fill(this.defColor);
+      }
       noStroke();
       ellipse(posPixel.x, posPixel.y, RADIUS_AGENT, RADIUS_AGENT);     
     }
@@ -66,6 +78,7 @@ class Agent {
       float m;
       
       Vec2 align_force = new Vec2(0, 0);
+      Vec2 cohesion_force = new Vec2(0, 0);
       Vec2 avoid_force = new Vec2(0, 0);
       Vec2 stop_force  = new Vec2(0, 0);
 
@@ -76,9 +89,22 @@ class Agent {
         if(this.body == other.body){ continue; }
         
         // Get other agent vectors
-        Vec2 otherPosW =other.body.getPosition();
-        Vec2 otherVel  =other.body.getLinearVelocity().clone();
+        Vec2 otherPosW = other.body.getPosition();
+        Vec2 otherVel  = other.body.getLinearVelocity().clone();
         Vec2 direction = otherPosW.sub(myPosW);
+       
+        /*
+         * INFECTION
+         */
+         if (direction.length() > 0 && direction.length() < INFECT_DIST) {
+           if (other.awareness > 0.5) {
+             awareness += 0.01;
+           }
+           if (other.awareness < -0.5) {
+             awareness -= 0.01;
+           }
+           awareness = constrain(awareness, -1, 1);
+         }
        
         /*
          * AVOIDANCE 
@@ -97,45 +123,58 @@ class Agent {
          * but further than AVOID_DIST
          */
           
-        else if(direction.length()<ALIGN_DIST & this.talking == false){
+        if(direction.length()<ALIGN_DIST & this.talking == false){
           otherVel.normalize();
           otherVel.mulLocal(2);
           align_force.addLocal(otherVel);
-          
-          //println("aligning to other agents");
         }
         
+        /**
+         * COHESION
+         */ 
+        if(direction.length() > 0 && direction.length()<ALIGN_DIST){
+          int count = 0;
+          if ((other.awareness > 0.5f && awareness > 0.5f) ||
+              (other.awareness < 0.5f && awareness < 0.5f)){
+                cohesion_force.addLocal(otherPosW);
+                count++;
+          }
+          if (count > 0) {
+            cohesion_force.mul(1.0f/(float)count);
+          }
+        }
+
         
-        // TALKING
+        //// TALKING
          
-        if(direction.length()<TALK_DIST & this.talking == false & other.talking == false){
-            if(random(100) < 1){
-              this.talking = true;
-              other.talking = true;
-              this.partner = other;
-              other.partner = this;}
-        }
-        if(this.talking == true) {
-          if(myVel.length() != 0) {
-            Vec2 damping = new Vec2(0,0);
-            damping = myVel.clone();
-            damping.mulLocal(-10);
-            stop_force.addLocal(damping);
-            this.defColor = color(200, 50, 50);
-          }
-          else if(random(100) < 0.05) {
-              this.talking = false;
-              this.partner.talking = false;
-              this.defColor = color(200, 200, 200);
-              this.partner.defColor = color(200, 200, 200);
+        //if(direction.length()<TALK_DIST & this.talking == false & other.talking == false){
+        //    if(random(100) < 1){
+        //      this.talking = true;
+        //      other.talking = true;
+        //      this.partner = other;
+        //      other.partner = this;}
+        //}
+        //if(this.talking == true) {
+        //  if(myVel.length() != 0) {
+        //    Vec2 damping = new Vec2(0,0);
+        //    damping = myVel.clone();
+        //    damping.mulLocal(-10);
+        //    stop_force.addLocal(damping);
+        //    this.defColor = color(200, 50, 50);
+        //  }
+        //  else if(random(100) < 0.05) {
+        //      this.talking = false;
+        //      this.partner.talking = false;
+        //      this.defColor = color(200, 200, 200);
+        //      this.partner.defColor = color(200, 200, 200);
               
-              Vec2 force = new Vec2(random(-1,1), random(-1,1));
-              this.applyForce(force.mul(2000));
-              Vec2 force2 = new Vec2(random(-1,1), random(-1,1));
-              this.partner.applyForce(force2.mul(2000));
-          }
+        //      Vec2 force = new Vec2(random(-1,1), random(-1,1));
+        //      this.applyForce(force.mul(2000));
+        //      Vec2 force2 = new Vec2(random(-1,1), random(-1,1));
+        //      this.partner.applyForce(force2.mul(2000));
+        //  }
           
-        } // End Talking
+        //} // End Talking
       } // End For Loop
       
       
@@ -166,6 +205,9 @@ class Agent {
       }
       if(stop_force.length()>0) {
         this.applyForce(stop_force);
+      }
+      if(cohesion_force.length()>0) {
+        this.applyForce(cohesion_force);
       }
     }
     

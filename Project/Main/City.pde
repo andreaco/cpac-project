@@ -99,7 +99,7 @@ class Wall {
 
   float x, y;
   float w, h;
-  color c = #444444;
+  color c = #44444444;
 
   Body b;
   
