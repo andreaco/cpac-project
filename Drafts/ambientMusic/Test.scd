@@ -101,6 +101,14 @@ SynthDef(\distortion, {arg amp = 0, smooth=0.5, outBus = 0,mul=0.01, inBus;
 	Out.ar(outBus,[input,input]);
 }).add;
 
+SynthDef(\pinkNoise, { arg outBus = 0, mul = 0;
+    var trig, seq, freq, signal;
+    trig = Impulse.kr(10);
+	seq = Drand([0.4,0.5,0.6,0.7,0.8,0.9], inf);
+    freq = Demand.kr(trig, 0, seq);
+	signal = PinkNoise.ar  * LFPulse.kr(freq,0,freq) * mul;
+	Out.ar(outBus, [signal,signal]); // maybe pan it!
+}).add;
 
 b = Bus.audio(s,2); // this will be our effects bus
 
@@ -109,14 +117,11 @@ b = Bus.audio(s,2); // this will be our effects bus
 (
 x = Synth.new("distortion", [\inBus, b]);
 y = Synth.before(x, "airportAmb", [\effectBus, b]);
+z = Synth.new("pinkNoise");
 )
 
 x.set(\amp,0.1);
-x.set(\mul, 0.1);
-y.set(\direct,0.8);
+x.set(\mul, 0.15);
+y.set(\direct,0.5);
 y.set(\amp,0.5);
-
-
-
-
-
+z.set(\mul, 0.02);
