@@ -97,7 +97,8 @@ SynthDef(\airportAmb, {
 SynthDef(\distortion, {arg amp = 0, smooth=0.5, outBus = 0,mul=0.01, inBus;
 	var input;
 	input = In.ar(inBus, 1);
-	input = CrossoverDistortion.ar(input, amp: amp, smooth: 0.5, mul: mul, add: 0);
+	//input = CrossoverDistortion.ar(input, amp: amp, smooth: 0.5, mul: mul, add: 0);
+	input = InsideOut.ar(input,mul);
 	Out.ar(outBus,[input,input]);
 }).add;
 
@@ -121,7 +122,7 @@ z = Synth.new("pinkNoise");
 )
 
 x.set(\amp,0.1);
-x.set(\mul, 0.15);
-y.set(\direct,0.5);
+x.set(\mul, 0.0);
+y.set(\direct,0.9);
 y.set(\amp,0.5);
 z.set(\mul, 0.02);
