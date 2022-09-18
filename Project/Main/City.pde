@@ -69,6 +69,9 @@ class City {
         if (row % 10 == 0 || col % 10 == 5) {
           citySkeleton[row][col] = STREET;
         }
+        if (row == 0 || col==0 || col==numCols-1 || row == numRows-1) {
+          citySkeleton[row][col] = WALL;
+        }
 
         // Rigid bodies
         if (citySkeleton[row][col] == WALL) {
@@ -80,10 +83,20 @@ class City {
 
     // Add boundaries at margins
 
-    walls.add(new Wall(0, 0, 10, height*2, #000000));  // North
-    walls.add(new Wall(0, 0, width*2, 10, #000000)); // West
-    walls.add(new Wall(width, 0, 10, height*2, #000000));  // East
-    walls.add(new Wall(0, height, width*2, 10, #000000));
+//    walls.add(new Wall(0, 0, 10, height*2, #000000));  // North
+//    walls.add(new Wall(0, 0, width*2, 10, #000000)); // West
+//    walls.add(new Wall(width, 0, 10, height*2, #000000));  // East
+//    walls.add(new Wall(0, height, width*2, 10, #000000));
+
+    //for(int i = 0; i < numCols; ++i) {
+    //  citySkeleton[i][0] = WALL;
+    //  citySkeleton[i][numRows-1] = WALL;
+    //}
+    
+    //for(int i = 0; i < numRows; ++i) {
+    //  citySkeleton[0][i] = WALL;
+    //  citySkeleton[numCols-1][i] = WALL;
+    //}
   }
 
   void draw() {
@@ -99,9 +112,9 @@ class Wall {
 
   float x, y;
   float w, h;
-  color c = #44444444;
+  color c = #444444;
 
-  Body b;
+  Body body;
   
   Wall(float x_, float y_, float w_, float h_, color c_) {
     this(x_, y_, w_, h_);
@@ -110,14 +123,14 @@ class Wall {
   Wall(float x_, float y_, float w_, float h_) {
     x = x_;
     y = y_;
-    w = w_;
-    h = h_;
+    w = w_*1.1;
+    h = h_*1.1;
 
     BodyDef bd = new BodyDef();
     bd.position.set(P2W(x, y));
 
     bd.type = BodyType.STATIC;
-    b = box2d.createBody(bd);
+    body = box2d.createBody(bd);
 
     float box2dW = P2W(w/2);
     float box2dH = P2W(h/2);
@@ -125,7 +138,7 @@ class Wall {
 
     ps.setAsBox(box2dW, box2dH);
 
-    b.createFixture(ps, 1);
+    body.createFixture(ps, 1);
   }
 
   void display() {
@@ -134,7 +147,7 @@ class Wall {
     fill(c);
     int currentRectMode = getGraphics().rectMode;
     rectMode(CENTER);
-    rect(x, y, w*1.1, h*1.1, 10);
+    rect(x, y, w*1.1, h*1.1);
     rectMode(currentRectMode);
   }
 }

@@ -1,84 +1,45 @@
-import oscP5.*; // OscP5, OscMessage
-import netP5.*; // NetAdress
-import shiffman.box2d.*;
-import org.jbox2d.collision.shapes.*;
-import org.jbox2d.common.*;
-import org.jbox2d.dynamics.*;
-import org.jbox2d.dynamics.contacts.*;
 
-
-/**
- * OSCP5 Objects
- */
-OscP5 oscP5;
-NetAddress netAddress;
-
-/**
- * Box2D Objects
- */
-Box2DProcessing box2d;
-BodyDef bd;
-CircleShape cs;
-
-/**
- * Agents Collections
- */
+// Agents Collections
 ArrayList<Agent> agents;
 City city;
 
-/**
- * Constants
- */
-int RADIUS_AGENT = 3;
-int SCALEFORCE = 200;
 
 void setup() {
   size(860, 720, P3D);
   
-  // Initialize OSC objects and address
-  oscP5 = new OscP5(this, 12000);
-  netAddress = new NetAddress("127.0.0.1", 12000);
+  // Initialize OSC
+  initOSC();
   
-  // Box2D Setup
-  box2d = new Box2DProcessing(this);
-  box2d.createWorld();
-  box2d.setGravity(0, 0);
-  bd= new BodyDef();
-  bd.type= BodyType.DYNAMIC;
-  cs  = new CircleShape();
-  cs.m_radius = P2W(RADIUS_AGENT/2);
-  bd.linearDamping=0;
+  // Initialize Box2D
+  initBox2D();
+  
+  // City initialization
+  city = new City(50, 50);
   
   // Agent Collection
-  agents = new ArrayList<Agent>();
+  initAgents();
+}
 
+
+void draw() {
+  // Update physical model
+  box2d.step();
   
-  city = new City(30, 30);
+  // Semi-transparent background
+  fill(0,100);
+  rect(0, 0, width, height);
   
-  int STARTING_AGENTS = 300; 
-  for (int i=0; i < STARTING_AGENTS; ++i) {
-    int col = int(random(city.numCols));
-    int row = int(random(city.numRows));
-    
-    if (city.citySkeleton[col][row] == STREET){
-      insertNewAgent(row*city.blockWidth, col*city.blockHeight);
-    }
+  // Draw city
+  city.draw();
+  
+  // Update and draw agents
+  for (Agent b : agents) {
+    b.update(agents, city.walls);
+    b.draw();
   }
-  agents.get(0).awareness = +1.0f;
-  agents.get(1).awareness = -1.0f;
-}
-
-
-void insertNewAgent(float x, float y) {
   
-    Agent b = new Agent(box2d, cs, bd, P2W(x, y));
-    
-    // initial random force
-    Vec2 force = new Vec2(random(-1,1), random(-1,1));     
-    b.applyForce(force.mul(SCALEFORCE));
-    
-    agents.add(b);     
 }
+
 
 void mousePressed() {
   //insert a new box
@@ -89,31 +50,4 @@ void mousePressed() {
   for (Agent agent : agents) {
     agent.update(agents, city.walls);
   }
-}
-
-void oscEvent(OscMessage theOscMessage) {
-  println("Received an osc message.");
-  for (Agent agent : agents) {
-    agent.update(agents, city.walls);
-  }
-}
-
-void draw() {
-  
-  
-  city.draw();
-  fill(0,100);
-  
-  rect(0, 0, width, height);
-  
-  box2d.step();
-  
-  //boundaries.draw();
-  
-  for (Agent b : agents) {
-    b.update(agents, city.walls);
-    b.draw();
-  }
-  
-  
 }
