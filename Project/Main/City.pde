@@ -26,7 +26,7 @@ class City {
 
     // Number of walkers and steps proportional to size
     int nWalkers = numRows;
-    int nSteps = numRows;
+    int nSteps = numRows*2;
 
     // For each walker
     for (int walker=0; walker < nWalkers; ++walker) {
@@ -81,22 +81,6 @@ class City {
       } // End For Cols
     } // End For Rows
 
-    // Add boundaries at margins
-
-//    walls.add(new Wall(0, 0, 10, height*2, #000000));  // North
-//    walls.add(new Wall(0, 0, width*2, 10, #000000)); // West
-//    walls.add(new Wall(width, 0, 10, height*2, #000000));  // East
-//    walls.add(new Wall(0, height, width*2, 10, #000000));
-
-    //for(int i = 0; i < numCols; ++i) {
-    //  citySkeleton[i][0] = WALL;
-    //  citySkeleton[i][numRows-1] = WALL;
-    //}
-    
-    //for(int i = 0; i < numRows; ++i) {
-    //  citySkeleton[0][i] = WALL;
-    //  citySkeleton[numCols-1][i] = WALL;
-    //}
   }
 
   void draw() {
@@ -143,11 +127,18 @@ class Wall {
 
   void display() {
 
+    pushStyle();
     noStroke();
-    fill(c);
-    int currentRectMode = getGraphics().rectMode;
+    
     rectMode(CENTER);
-    rect(x, y, w*1.1, h*1.1);
-    rectMode(currentRectMode);
+    
+    fill(20*noise(x+frameCount, y+frameCount), 2);
+    //fill(255);
+    //rect(x, y, w, h);
+    ellipse(x, y, random(0.6, 1.5)*w*3, random(0.6, 1.5)*h*3);
+    
+    
+    
+    popStyle();
   }
 }
