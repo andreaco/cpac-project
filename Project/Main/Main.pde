@@ -1,11 +1,27 @@
+// Init constants
+int STARTING_AGENTS = 800; 
+int CITY_ROWS = 50;
+int CITY_COLS = 50;
+
+// DEBUG MODE
+boolean DEBUG = false;
 
 // Agents Collections
-ArrayList<Agent> agents;
+Population population;
 City city;
 
 
 void setup() {
-  size(860, 720, P3D);
+  // Screen Size
+  //size(860, 720, P3D);
+  fullScreen();
+  
+  // Processing Settings
+  smooth(8);
+  frameRate(24);
+  noCursor();
+  background(0);
+  randomSeed(1);
   
   // Initialize OSC
   initOSC();
@@ -13,41 +29,32 @@ void setup() {
   // Initialize Box2D
   initBox2D();
   
-  // City initialization
-  city = new City(50, 50);
+  // Load Textures
+  initTextures();
   
-  // Agent Collection
-  initAgents();
+  // Init GUI
+  initGUI();
+  
+  // Initialize City Map
+  city = new City(CITY_COLS, CITY_ROWS);
+  
+  // Initialize Population
+  population = new Population(STARTING_AGENTS);
 }
-
 
 void draw() {
   // Update physical model
   box2d.step();
   
-  // Semi-transparent background
-  fill(0,100);
-  rect(0, 0, width, height);
+  drawBackground();
   
   // Draw city
   city.draw();
   
-  // Update and draw agents
-  for (Agent b : agents) {
-    b.update(agents, city.walls);
-    b.draw();
-  }
+  // Draw Population
+  population.draw();
   
-}
-
-
-void mousePressed() {
-  //insert a new box
-  if(mouseButton == LEFT){
-    insertNewAgent(mouseX, mouseY);
-  }
   
-  for (Agent agent : agents) {
-    agent.update(agents, city.walls);
-  }
+  // GUI
+  drawGUI();
 }

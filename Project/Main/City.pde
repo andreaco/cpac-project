@@ -1,6 +1,13 @@
-// Constants
+
+
 int WALL = 0;
 int STREET = 1;
+
+void initCity() {
+  // City initialization
+  city = new City(CITY_COLS, CITY_ROWS);
+}
+
 class City {
 
   int[][] citySkeleton;
@@ -26,7 +33,7 @@ class City {
 
     // Number of walkers and steps proportional to size
     int nWalkers = numRows;
-    int nSteps = numRows;
+    int nSteps = numRows*2;
 
     // For each walker
     for (int walker=0; walker < nWalkers; ++walker) {
@@ -81,73 +88,12 @@ class City {
       } // End For Cols
     } // End For Rows
 
-    // Add boundaries at margins
-
-//    walls.add(new Wall(0, 0, 10, height*2, #000000));  // North
-//    walls.add(new Wall(0, 0, width*2, 10, #000000)); // West
-//    walls.add(new Wall(width, 0, 10, height*2, #000000));  // East
-//    walls.add(new Wall(0, height, width*2, 10, #000000));
-
-    //for(int i = 0; i < numCols; ++i) {
-    //  citySkeleton[i][0] = WALL;
-    //  citySkeleton[i][numRows-1] = WALL;
-    //}
-    
-    //for(int i = 0; i < numRows; ++i) {
-    //  citySkeleton[0][i] = WALL;
-    //  citySkeleton[numCols-1][i] = WALL;
-    //}
   }
 
   void draw() {
+ 
     for (Wall w : walls) {
       w.display();
     }
-  }
-}
-
-
-
-class Wall {
-
-  float x, y;
-  float w, h;
-  color c = #444444;
-
-  Body body;
-  
-  Wall(float x_, float y_, float w_, float h_, color c_) {
-    this(x_, y_, w_, h_);
-    c = c_;
-  }
-  Wall(float x_, float y_, float w_, float h_) {
-    x = x_;
-    y = y_;
-    w = w_*1.1;
-    h = h_*1.1;
-
-    BodyDef bd = new BodyDef();
-    bd.position.set(P2W(x, y));
-
-    bd.type = BodyType.STATIC;
-    body = box2d.createBody(bd);
-
-    float box2dW = P2W(w/2);
-    float box2dH = P2W(h/2);
-    PolygonShape ps = new PolygonShape();
-
-    ps.setAsBox(box2dW, box2dH);
-
-    body.createFixture(ps, 1);
-  }
-
-  void display() {
-
-    noStroke();
-    fill(c);
-    int currentRectMode = getGraphics().rectMode;
-    rectMode(CENTER);
-    rect(x, y, w*1.1, h*1.1);
-    rectMode(currentRectMode);
   }
 }
