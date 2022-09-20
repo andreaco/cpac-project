@@ -13,7 +13,8 @@ float boxGUIWidth, boxGUIHeight;
 float margin = 20;
 float fontSize = 14;
 void initGUI() {
-  boldFont = createFont("Arial Bold", fontSize);
+  boldFont = createFont("Roboto-Bold.ttf", fontSize);
+  textSize(fontSize);
   textFont(boldFont);
   
   String longest = "";
