@@ -1,6 +1,13 @@
-// Constants
+
+
 int WALL = 0;
 int STREET = 1;
+
+void initCity() {
+  // City initialization
+  city = new City(CITY_COLS, CITY_ROWS);
+}
+
 class City {
 
   int[][] citySkeleton;
@@ -84,63 +91,9 @@ class City {
   }
 
   void draw() {
+ 
     for (Wall w : walls) {
       w.display();
-    }
-  }
-}
-
-
-
-class Wall {
-
-  float x, y;
-  float w, h;
-  color c = #444444;
-
-  Body body;
-  
-  Wall(float x_, float y_, float w_, float h_, color c_) {
-    this(x_, y_, w_, h_);
-    c = c_;
-  }
-  Wall(float x_, float y_, float w_, float h_) {
-    x = x_;
-    y = y_;
-    w = w_*1.1;
-    h = h_*1.1;
-
-    BodyDef bd = new BodyDef();
-    bd.position.set(P2W(x, y));
-
-    bd.type = BodyType.STATIC;
-    body = box2d.createBody(bd);
-
-    float box2dW = P2W(w/2);
-    float box2dH = P2W(h/2);
-    PolygonShape ps = new PolygonShape();
-
-    ps.setAsBox(box2dW, box2dH);
-
-    body.createFixture(ps, 1);
-  }
-
-  void display() {
-    
-    if(!DEBUG) {
-      pushStyle();
-      noStroke();
-    
-      rectMode(CENTER);
-    
-      fill(20*noise(x+frameCount, y+frameCount), 2);
-      //fill(255);
-      //rect(x, y, w, h);
-      ellipse(x, y, random(0.6, 1.5)*w*3, random(0.6, 1.5)*h*3);
-      popStyle();
-    }
-    else {
-      // DEBUG VIEW
     }
   }
 }

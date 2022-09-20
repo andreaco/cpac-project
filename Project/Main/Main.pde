@@ -1,98 +1,60 @@
+// Init constants
+int STARTING_AGENTS = 800; 
+int CITY_ROWS = 50;
+int CITY_COLS = 50;
+
+// DEBUG MODE
 boolean DEBUG = false;
 
-
 // Agents Collections
-ArrayList<Agent> agents;
+Population population;
 City city;
 
 
 void setup() {
+  // Screen Size
   //size(860, 720, P3D);
   fullScreen();
-  //smooth(8);
+  
+  // Processing Settings
+  smooth(8);
+  frameRate(24);
+  noCursor();
+  background(0);
+  randomSeed(1);
+  
   // Initialize OSC
   initOSC();
   
   // Initialize Box2D
   initBox2D();
   
-  // City initialization
-  city = new City(50, 50);
+  // Load Textures
+  initTextures();
   
-  // Agent Collection
-  initAgents();
-  background(0);
-  //bg = loadImage("gray_texture.jpg");
-  bg2 = loadImage("fire.jpg");
-  bg = loadImage("water.jpg");
-  bg.resize(width,height);
-  bg2.resize(width,height);
+  // Init GUI
+  initGUI();
   
+  // Initialize City Map
+  city = new City(CITY_COLS, CITY_ROWS);
   
-  texture = loadImage("paper_texture.jpg");
-  texture.resize(width, height);
-  
-  noCursor();
+  // Initialize Population
+  population = new Population(STARTING_AGENTS);
 }
 
-
-PImage bg, bg2;
-PImage texture;
 void draw() {
-
   // Update physical model
   box2d.step();
+  
+  drawBackground();
+  
   // Draw city
-
-  //fill(0, 5);
-  //rect(0, 0, width, height);
   city.draw();
-
   
-  //rect(0, 0, width, height);
+  // Draw Population
+  population.draw();
   
   
-  // Update and draw agents
-  for (Agent b : agents) {
-    b.update(agents, city.walls);
-    b.draw();
-  }
-
-  
-  //filter();
-  // Semi-transparent background
-  tint(10,3);
-  image(texture,0,0);
-}
-
-
-void keyPressed() {
-  //insert a new box
-  if(key == 'w'){
-    for (int i = 0; i < 100; i++) {
-      Agent a = agents.get((int)random(agents.size()));
-      a.awareness = 1.0;
-    } 
-  }
-  
-  if(key == 's'){
-    for (int i = 0; i < 100; i++) {
-      Agent a = agents.get((int)random(agents.size()));
-      a.awareness = -1.0;
-    } 
-  }
-  
-  if(key == 'a'){
-    Agent a = agents.get((int)random(agents.size()));
-    a.awareness = -1.0;
-  }
-  
-  if(key == 'd'){
-    Agent a = agents.get((int)random(agents.size()));
-    a.awareness = 1.0;
-  }
-  
-  if(key == '1'){
-    city.generateCity();
-  }
+  // GUI
+  drawGUI();
 }
