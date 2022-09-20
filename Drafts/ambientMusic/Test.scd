@@ -122,7 +122,7 @@ z = Synth.new("pinkNoise");
 )
 
 x.set(\amp,0.1);
-x.set(\mul, 0.0);
+x.set(\mul, 0.001);
 y.set(\direct,0.9);
 y.set(\amp,0.5);
-z.set(\mul, 0.02);
+z.set(\mul, 0.00);

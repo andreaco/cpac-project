@@ -1,3 +1,5 @@
+boolean DEBUG = false;
+
 
 // Agents Collections
 ArrayList<Agent> agents;
@@ -30,12 +32,7 @@ void setup() {
   texture = loadImage("paper_texture.jpg");
   texture.resize(width, height);
   
-  
-  city.draw();
-  city.draw();
-  city.draw();
-  city.draw();
-  city.draw();
+  noCursor();
 }
 
 
@@ -46,13 +43,14 @@ void draw() {
   // Update physical model
   box2d.step();
   // Draw city
-  if(frameCount % 1 == 0) {
-    //fill(0, 5);
-    //rect(0, 0, width, height);
-    city.draw();
-  }
+
+  //fill(0, 5);
+  //rect(0, 0, width, height);
+  city.draw();
+
   
   //rect(0, 0, width, height);
+  
   
   // Update and draw agents
   for (Agent b : agents) {

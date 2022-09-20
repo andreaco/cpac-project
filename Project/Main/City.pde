@@ -126,19 +126,21 @@ class Wall {
   }
 
   void display() {
-
-    pushStyle();
-    noStroke();
     
-    rectMode(CENTER);
+    if(!DEBUG) {
+      pushStyle();
+      noStroke();
     
-    fill(20*noise(x+frameCount, y+frameCount), 2);
-    //fill(255);
-    //rect(x, y, w, h);
-    ellipse(x, y, random(0.6, 1.5)*w*3, random(0.6, 1.5)*h*3);
+      rectMode(CENTER);
     
-    
-    
-    popStyle();
+      fill(20*noise(x+frameCount, y+frameCount), 2);
+      //fill(255);
+      //rect(x, y, w, h);
+      ellipse(x, y, random(0.6, 1.5)*w*3, random(0.6, 1.5)*h*3);
+      popStyle();
+    }
+    else {
+      // DEBUG VIEW
+    }
   }
 }
