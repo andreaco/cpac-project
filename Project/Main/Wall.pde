@@ -8,6 +8,7 @@ class Wall {
   Wall(float x_, float y_, float w_, float h_, color c_) {
     this(x_, y_, w_, h_);
   }
+  
   Wall(float x_, float y_, float w_, float h_) {
     x = x_;
     y = y_;
@@ -39,7 +40,9 @@ class Wall {
     }
     else {
       fill(255);
-      rect(x, y, w/2, h/2);
+      noStroke();
+      rectMode(CENTER);
+      rect(x, y, w*0.9, h*0.9);
     }
     popStyle();
   }

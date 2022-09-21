@@ -31,7 +31,6 @@ void drawGUI() {
   
   if (DEBUG) {
     pushStyle();
-    
     fill(100, 200);
     float padX = 0.9*margin;
     float padY = 0.9*margin;
@@ -40,8 +39,7 @@ void drawGUI() {
     textSize(fontSize);
     fill(0);
     for(int i = 0; i < shortcuts.length; ++i) {
-      text(shortcuts[i], 20, 20+fontSize*(i+1)
-      ); 
+      text(shortcuts[i], 20, 20+fontSize*(i+1)); 
     }
     popStyle();
   }

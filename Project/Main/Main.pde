@@ -1,5 +1,5 @@
 // Init constants
-int STARTING_AGENTS = 800; 
+int STARTING_AGENTS = 500; 
 int CITY_ROWS = 50;
 int CITY_COLS = 50;
 
@@ -13,8 +13,8 @@ City city;
 
 void setup() {
   // Screen Size
-  //size(860, 720, P3D);
-  fullScreen();
+  size(860, 720, P3D);
+  //fullScreen();
   
   // Processing Settings
   smooth(8);
@@ -54,9 +54,10 @@ void draw() {
   // Draw Population
   population.draw();
   
-  
   // GUI
   drawGUI();
   
-  sendEffect(population.unawareness,population.activity);
+  // OSC effects
+  population.updateAwarenessNumbers();
+  sendEffect(population.unawareness, population.activity);
 }

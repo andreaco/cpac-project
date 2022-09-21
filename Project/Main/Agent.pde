@@ -188,7 +188,9 @@ class Agent {
     void renderNeutral(Vec2 position) {
       if(!DEBUG) {
         noStroke();
-        fill(0, 0, 0, 20);
+        // TODO: tune the visibility of neutral agents
+        float visibility = 20;
+        fill(visibility, 20);
         ellipse(position.x, position.y, RADIUS_AGENT, RADIUS_AGENT);
       }
       else {
@@ -226,15 +228,12 @@ class Agent {
       
       if (awareness > 0.5f) {
         renderAware(posPixel);
-        population.awarePop += 1;
       }
       else if (awareness < -0.5f) {
         renderUnaware(posPixel);
-        population.unawarePop += 1;
       }
       else {
         renderNeutral(posPixel);
-        population.neutralPop += 1;
       }
       
       popStyle();

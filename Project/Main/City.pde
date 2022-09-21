@@ -82,7 +82,7 @@ class City {
 
         // Rigid bodies
         if (citySkeleton[row][col] == WALL) {
-          Wall wall = new Wall(col*blockWidth, row*blockHeight, blockWidth*1.1, blockHeight*1.1);
+          Wall wall = new Wall(col*blockWidth, row*blockHeight, blockWidth, blockHeight);
           walls.add(wall);
         }
       } // End For Cols
