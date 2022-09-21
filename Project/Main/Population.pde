@@ -2,6 +2,10 @@
 class Population {
   ArrayList<Agent> agents;
   
+  // variables to take count of the population
+  float awarePop,  unawarePop, neutralPop;
+  float unawareness, activity;
+  
   void insertNewAgent(float x, float y) {
       Agent b = new Agent(box2d, cs, bd, P2W(x, y));
       
@@ -34,9 +38,17 @@ class Population {
    
   void draw() {
     // Update and draw agents
+    this.awarePop = 0;
+    this.unawarePop = 0;
+    this.neutralPop = 0;
+      
     for (Agent a : agents) {
       a.update(agents, city.walls);
       a.draw();
     }
+    
+    // these are used for controlling the musical effects through OSC
+    this.unawareness = unawarePop / (awarePop + unawarePop);
+    this.activity = 1-(neutralPop / (awarePop + unawarePop + neutralPop));
   }
 }

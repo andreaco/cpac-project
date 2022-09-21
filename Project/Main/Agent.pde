@@ -226,12 +226,15 @@ class Agent {
       
       if (awareness > 0.5f) {
         renderAware(posPixel);
+        population.awarePop += 1;
       }
       else if (awareness < -0.5f) {
         renderUnaware(posPixel);
+        population.unawarePop += 1;
       }
       else {
         renderNeutral(posPixel);
+        population.neutralPop += 1;
       }
       
       popStyle();

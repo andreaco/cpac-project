@@ -57,4 +57,6 @@ void draw() {
   
   // GUI
   drawGUI();
+  
+  sendEffect(population.unawareness,population.activity);
 }
