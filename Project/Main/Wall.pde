@@ -35,7 +35,8 @@ class Wall {
     if(!DEBUG) {
       noStroke();
       rectMode(CENTER);
-      fill(80*noise(x+frameCount, y+frameCount), 2);
+      //fill(80*noise(x+frameCount, y+frameCount), 2);
+      fill(0,2);
       ellipse(x, y, random(0.6, 1.5)*w*3, random(0.6, 1.5)*h*3);
     }
     else {

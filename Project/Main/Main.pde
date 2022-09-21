@@ -13,7 +13,7 @@ City city;
 
 void setup() {
   // Screen Size
-  size(860, 720, P3D);
+  size(860, 720);
   //fullScreen();
   
   // Processing Settings
