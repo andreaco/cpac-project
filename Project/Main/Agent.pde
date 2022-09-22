@@ -128,11 +128,11 @@ class Agent {
       Vec2 selfPos = this.body.getPosition();
 
       Vec2 wallPos = wall.body.getPosition();
-        Vec2 direction = wallPos.sub(selfPos);
+      Vec2 direction = wallPos.sub(selfPos);
 
-        if(direction.length() <WALL_AVOID_DIST){
-          avoidForce.addLocal(direction.mul(-10)); // 
-        }
+      if(direction.length() <WALL_AVOID_DIST){
+        avoidForce.addLocal(direction.mul(-10));
+      }
     }
     
     // Update function
@@ -190,7 +190,7 @@ class Agent {
         canvas.noStroke();
         // TODO: tune the visibility of neutral agents
         float visibility = 50;
-        canvas.fill(visibility, 20);
+        canvas.fill(visibility, 10);
         canvas.ellipse(position.x, position.y, RADIUS_AGENT, RADIUS_AGENT);
       }
       else {

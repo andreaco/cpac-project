@@ -41,3 +41,12 @@ void keyPressed() {
     DEBUG = !DEBUG;
   }
 }
+
+void mouseClicked() {
+  if (mouseButton == LEFT) {
+    population.convertArea(mouseX, mouseY, INFLUENCE_DIAM/2, 1.0f);
+  }
+  if (mouseButton == RIGHT) {
+    population.convertArea(mouseX, mouseY, INFLUENCE_DIAM/2, -1.0f);
+  }
+}

@@ -5,6 +5,9 @@ int STARTING_AGENTS = 500;
 int CITY_ROWS = 50;
 int CITY_COLS = 50;
 
+float INFLUENCE_DIAM = 75;
+
+
 // DEBUG MODE
 boolean DEBUG = false;
 

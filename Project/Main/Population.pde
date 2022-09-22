@@ -68,6 +68,38 @@ class Population {
     }
   }
   
+  void convertArea(float x, float y, float ray, float awareness) {
+    Vec2 pointerPos = new Vec2(x, y);
+    for (Agent a : agents) {
+      Vec2 agentPos = W2P(a.body.getPosition());
+      float distance = agentPos.sub(pointerPos).length();
+      if(distance < ray) {
+        awareness = constrain(awareness, -1.0, 1.0);
+        a.awareness = awareness;
+      }
+    }
+  }
+  
+  void highlightArea(float x, float y, float ray) {
+    pushStyle();
+    colorMode(HSB);
+    Vec2 pointerPos = new Vec2(x, y);
+    for (Agent a : agents) {
+      Vec2 agentPos = W2P(a.body.getPosition());
+      float distance = agentPos.sub(pointerPos).length();
+      if(distance < ray) {
+        float brightness = ((ray-distance)/ray);
+        color c = color(180);
+        if (a.awareness > +0.5) c = water.get(int(agentPos.x), int(agentPos.y));
+        if (a.awareness < -0.5) c = fire.get(int(agentPos.x), int(agentPos.y));
+        c = color(hue(c), saturation(c), brightness*brightness(c));
+        fill(c);
+        ellipse(agentPos.x, agentPos.y, RADIUS_AGENT, RADIUS_AGENT);
+      }
+    }
+    popStyle();
+  }
+  
   void draw() {
     // Update and draw agents
     
