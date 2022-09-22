@@ -31,20 +31,24 @@ class Wall {
   }
 
   void display() {
-    pushStyle();
+    
     if(!DEBUG) {
-      noStroke();
-      rectMode(CENTER);
+      canvas.pushStyle();
+      canvas.noStroke();
+      canvas.rectMode(CENTER);
       //fill(80*noise(x+frameCount, y+frameCount), 2);
-      fill(0,2);
-      ellipse(x, y, random(0.6, 1.5)*w*3, random(0.6, 1.5)*h*3);
+      canvas.fill(0,2);
+      canvas.ellipse(x, y, random(0.6, 1.5)*w*3, random(0.6, 1.5)*h*3);
+      canvas.popStyle();
     }
     else {
+      pushStyle();
       fill(255);
       noStroke();
       rectMode(CENTER);
       rect(x, y, w*0.9, h*0.9);
+      popStyle();
     }
-    popStyle();
+    
   }
 }

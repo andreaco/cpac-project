@@ -1,3 +1,5 @@
+PGraphics canvas;
+
 // Init constants
 int STARTING_AGENTS = 500; 
 int CITY_ROWS = 50;
@@ -40,9 +42,16 @@ void setup() {
   
   // Initialize Population
   population = new Population(STARTING_AGENTS);
+  
+  // Instantiate main canvas
+  canvas = createGraphics(width, height);
+  
 }
 
 void draw() {
+  // Start drawing on canvas
+  canvas.beginDraw();
+  
   // Update physical model
   box2d.step();
   
@@ -53,6 +62,10 @@ void draw() {
   
   // Draw Population
   population.draw();
+  
+  // End drawing on canvas and display it
+  canvas.endDraw();
+  if (!DEBUG) image(canvas, 0, 0, width, height);
   
   // GUI
   drawGUI();

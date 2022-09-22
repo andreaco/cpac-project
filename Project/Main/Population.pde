@@ -60,10 +60,12 @@ class Population {
     this.unawareness = (float)unawarePop / (float)(awarePop + unawarePop);
     this.activity = 1 - ((float)neutralPop / (float)(awarePop + unawarePop + neutralPop));
     
-    println("Aware: " + awarePop + "| Unaware: " + unawarePop + "| Neutral: " + neutralPop);
-    println("Total: " + (awarePop + unawarePop + neutralPop));
-    println();
-    println("Unawareness: " + unawareness + "| Activity: " + activity);
+    if (DEBUG) {
+      println("Aware: " + awarePop + "| Unaware: " + unawarePop + "| Neutral: " + neutralPop);
+      println("Total: " + (awarePop + unawarePop + neutralPop));
+      println();
+      println("Unawareness: " + unawareness + "| Activity: " + activity);
+    }
   }
   
   void draw() {

@@ -1,10 +1,7 @@
 void drawBackground() {
   if (!DEBUG) {
-    // Semi-transparent Texture
-    //tint(10,3);
-    //image(texture,0,0);
-    fill(0, 5);
-    rect(0, 0, width, height);
+    canvas.fill(0, 5);
+    canvas.rect(0, 0, width, height);
   }
   else {
     background(0);

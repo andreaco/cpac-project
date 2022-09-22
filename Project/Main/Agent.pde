@@ -167,17 +167,17 @@ class Agent {
     
     void renderAware(Vec2 position) {
       if(!DEBUG) {
-        noStroke();
+        canvas.noStroke();
         // Get color from texture
         color awareColor = water.get(int(position.x), int(position.y));
         
         // Glow
-        fill(awareColor, 4);
-        ellipse(position.x, position.y, RADIUS_AGENT*random(10), RADIUS_AGENT*random(10));
+        canvas.fill(awareColor, 4);
+        canvas.ellipse(position.x, position.y, RADIUS_AGENT*random(10), RADIUS_AGENT*random(10));
         
         // Light Source 
-        fill(awareColor, 20);
-        ellipse(position.x, position.y, RADIUS_AGENT, RADIUS_AGENT);
+        canvas.fill(awareColor, 20);
+        canvas.ellipse(position.x, position.y, RADIUS_AGENT, RADIUS_AGENT);
       }
       else {
         fill(0, 255, 0);
@@ -187,11 +187,11 @@ class Agent {
     
     void renderNeutral(Vec2 position) {
       if(!DEBUG) {
-        noStroke();
+        canvas.noStroke();
         // TODO: tune the visibility of neutral agents
-        float visibility = 20;
-        fill(visibility, 20);
-        ellipse(position.x, position.y, RADIUS_AGENT, RADIUS_AGENT);
+        float visibility = 50;
+        canvas.fill(visibility, 20);
+        canvas.ellipse(position.x, position.y, RADIUS_AGENT, RADIUS_AGENT);
       }
       else {
         fill(200, 200, 200);
@@ -201,17 +201,17 @@ class Agent {
     
     void renderUnaware(Vec2 position) {
       if(!DEBUG) {
-        noStroke();
+        canvas.noStroke();
         // Get color from texture
         color unawareColor = fire.get(int(position.x), int(position.y));
         
         // Glow
-        fill(unawareColor, 4);
-        ellipse(position.x, position.y, RADIUS_AGENT*random(10), RADIUS_AGENT*random(10));
+        canvas.fill(unawareColor, 4);
+        canvas.ellipse(position.x, position.y, RADIUS_AGENT*random(10), RADIUS_AGENT*random(10));
         
         // Light Source 
-        fill(unawareColor, 20);
-        ellipse(position.x, position.y, RADIUS_AGENT, RADIUS_AGENT);
+        canvas.fill(unawareColor, 20);
+        canvas.ellipse(position.x, position.y, RADIUS_AGENT, RADIUS_AGENT);
       }
       else {
         fill(255, 0, 0);
@@ -221,7 +221,7 @@ class Agent {
     
     // Rendering function
     void draw() {
-      pushStyle();
+      canvas.pushStyle();
       
       // Get Position in Pixels
       Vec2 posPixel = this.box2d.getBodyPixelCoord(this.body);
@@ -236,6 +236,6 @@ class Agent {
         renderNeutral(posPixel);
       }
       
-      popStyle();
+      canvas.popStyle();
     }
 }
