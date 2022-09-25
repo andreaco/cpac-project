@@ -24,3 +24,13 @@ void sendEffect(float unawareness_perc, float activity){
     effect.add(activity);    
     oscP5.send(effect, netAddress);
 }
+
+void shareButtonPressed(boolean isFake) {
+  currentState = STATE_ACTIVE;
+  currentNews = (isFake) ? NEWS_NEGATIVE : NEWS_POSITIVE;
+}
+
+void reportButtonPressed(boolean isFake) {
+  currentState = STATE_ACTIVE;
+  currentNews = (isFake) ? NEWS_POSITIVE : NEWS_NEGATIVE;
+}

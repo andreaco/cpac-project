@@ -68,7 +68,8 @@ class Population {
     }
   }
   
-  void convertArea(float x, float y, float ray, float awareness) {
+  boolean convertArea(float x, float y, float ray, float awareness) {
+    boolean converted = false;
     Vec2 pointerPos = new Vec2(x, y);
     for (Agent a : agents) {
       Vec2 agentPos = W2P(a.body.getPosition());
@@ -76,8 +77,26 @@ class Population {
       if(distance < ray) {
         awareness = constrain(awareness, -1.0, 1.0);
         a.awareness = awareness;
+        converted = true;
       }
     }
+    return converted;
+  }
+  
+  boolean convertSingle(float x, float y, float ray, float awareness) {
+    boolean converted = false;
+    Vec2 pointerPos = new Vec2(x, y);
+    for (Agent a : agents) {
+      Vec2 agentPos = W2P(a.body.getPosition());
+      float distance = agentPos.sub(pointerPos).length();
+      if(distance < ray) {
+        awareness = constrain(awareness, -1.0, 1.0);
+        a.awareness = awareness;
+        converted = true;
+        break;
+      }
+    }
+    return converted;
   }
   
   void highlightArea(float x, float y, float ray) {

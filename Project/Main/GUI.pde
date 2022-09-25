@@ -1,3 +1,10 @@
+int STATE_IDLE = 0;
+int STATE_ACTIVE = 1;
+int NEWS_NEGATIVE = -1;
+int NEWS_POSITIVE = +1;
+int currentState = 0;
+int currentNews = 1;
+
 PFont boldFont;
 float boxGUIWidth, boxGUIHeight;
 float margin = 20;
@@ -37,18 +44,20 @@ void drawGUI() {
     ellipse(mouseX, mouseY, INFLUENCE_DIAM,  INFLUENCE_DIAM); 
   }
   else {
-    pushStyle();
-    blendMode(SCREEN);
-    int numCircles = 20;
-    for (int i=0; i < numCircles; ++i) {
-      float perc = i / (float) numCircles;
-      fill(150, 150, 150, 5); 
-      ellipse(mouseX, mouseY, INFLUENCE_DIAM*perc,  INFLUENCE_DIAM*perc);
+    if(currentState == STATE_ACTIVE) {
+      pushStyle();
+      fill(0, 100);
+      rect(0, 0, width, height);
+      blendMode(SCREEN);
+      int numCircles = 20;
+      for (int i=0; i < numCircles; ++i) {
+        float perc = i / (float) numCircles;
+        fill(150, 150, 150, 5); 
+        ellipse(mouseX, mouseY, INFLUENCE_DIAM*perc,  INFLUENCE_DIAM*perc);
+      }
+      population.highlightArea(mouseX, mouseY, INFLUENCE_DIAM/2);
+      popStyle();
     }
-    population.highlightArea(mouseX, mouseY, INFLUENCE_DIAM/2);
-     
-    
-    popStyle();
   }
   
 }
