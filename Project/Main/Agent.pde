@@ -173,7 +173,7 @@ class Agent {
         
         // Glow
         canvas.fill(awareColor, 4);
-        canvas.ellipse(position.x, position.y, RADIUS_AGENT*random(10), RADIUS_AGENT*random(10));
+        canvas.ellipse(position.x, position.y, RADIUS_AGENT*random(15), RADIUS_AGENT*random(15));
         
         // Light Source 
         canvas.fill(awareColor, 20);
@@ -207,7 +207,7 @@ class Agent {
         
         // Glow
         canvas.fill(unawareColor, 4);
-        canvas.ellipse(position.x, position.y, RADIUS_AGENT*random(10), RADIUS_AGENT*random(10));
+        canvas.ellipse(position.x, position.y, RADIUS_AGENT*random(15), RADIUS_AGENT*random(15));
         
         // Light Source 
         canvas.fill(unawareColor, 20);

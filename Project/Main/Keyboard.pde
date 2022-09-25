@@ -5,6 +5,8 @@ String[] shortcuts = {
   "Press (A) to convert 1 random agent to Unaware state",
   "Press (SPACE) to toggle DEBUG mode",
 };
+
+
 void keyPressed() {
   
   // (W): 100 random agents get awareness +1.0f
@@ -42,7 +44,7 @@ void keyPressed() {
   }
 }
 
-void mouseClicked() {
+void mousePressed() {
   if (mouseButton == LEFT) {
     population.convertArea(mouseX, mouseY, INFLUENCE_DIAM/2, 1.0f);
   }

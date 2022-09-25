@@ -42,7 +42,7 @@ void drawGUI() {
     int numCircles = 20;
     for (int i=0; i < numCircles; ++i) {
       float perc = i / (float) numCircles;
-      fill(150, 255, 150, 5); 
+      fill(150, 150, 150, 5); 
       ellipse(mouseX, mouseY, INFLUENCE_DIAM*perc,  INFLUENCE_DIAM*perc);
     }
     population.highlightArea(mouseX, mouseY, INFLUENCE_DIAM/2);
