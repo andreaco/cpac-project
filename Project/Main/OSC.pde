@@ -27,10 +27,10 @@ void sendEffect(float unawareness_perc, float activity){
 
 void shareButtonPressed(boolean isFake) {
   currentState = STATE_ACTIVE;
-  currentNews = (isFake) ? NEWS_NEGATIVE : NEWS_POSITIVE;
+  currentInfluence = (isFake) ? INFLUENCE_NEGATIVE : INFLUENCE_POSITIVE;
 }
 
 void reportButtonPressed(boolean isFake) {
   currentState = STATE_ACTIVE;
-  currentNews = (isFake) ? NEWS_POSITIVE : NEWS_NEGATIVE;
+  currentInfluence = (isFake) ? INFLUENCE_POSITIVE : INFLUENCE_NEGATIVE;
 }

@@ -46,11 +46,11 @@ void keyPressed() {
   }
   
   if(key == '1') {
-    currentNews = NEWS_POSITIVE;
+    currentInfluence = INFLUENCE_POSITIVE;
     currentState = STATE_ACTIVE;
   }
   if(key == '0') {
-    currentNews = NEWS_NEGATIVE;
+    currentInfluence = INFLUENCE_NEGATIVE;
     currentState = STATE_ACTIVE;
   }
 }
@@ -60,12 +60,9 @@ void mousePressed() {
   
   if(currentState == STATE_ACTIVE) {
     boolean converted = false;
-    if (mouseButton == LEFT) {
-      converted = population.convertArea(mouseX, mouseY, INFLUENCE_DIAM/2, 1.0f);
-    }
-    if (mouseButton == RIGHT) {
-      converted = population.convertArea(mouseX, mouseY, INFLUENCE_DIAM/2, -1.0f);
-    }
+
+    converted = population.convertArea(mouseX, mouseY, INFLUENCE_DIAM/2, currentInfluence);
+
     
     // If at least one converted, go back to idle state
     if(converted) {
