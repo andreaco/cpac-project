@@ -46,27 +46,34 @@ void keyPressed() {
   }
   
   if(key == '1') {
-    currentInfluence = INFLUENCE_POSITIVE;
-    currentState = STATE_ACTIVE;
+    addGroupPositiveInfluence();
   }
   if(key == '0') {
-    currentInfluence = INFLUENCE_NEGATIVE;
-    currentState = STATE_ACTIVE;
+    addGroupNegativeInfluence();
   }
 }
 
 
 void mousePressed() {
   
-  if(currentState == STATE_ACTIVE) {
+  if(currentState == STATE_GROUP_ACTIVE) {
     boolean converted = false;
-
+    
     converted = population.convertArea(mouseX, mouseY, INFLUENCE_DIAM/2, currentInfluence);
 
-    
     // If at least one converted, go back to idle state
     if(converted) {
       currentState = STATE_IDLE;
     }
   }
+  if(currentState == STATE_SINGLE_ACTIVE) {
+    boolean converted = false;
+    
+    converted = population.convertSingle(mouseX, mouseY, INFLUENCE_DIAM/2, currentInfluence);
+
+    // If at least one converted, go back to idle state
+    if(converted) {
+      currentState = STATE_IDLE;
+    }
+  } 
 }
