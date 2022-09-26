@@ -13,7 +13,10 @@ float handPosY = 0;
 float openHand = 0; // difference between the pos of the tip of the index and its middle knuckle
 // used to determine if the hand is opened or closed
 
-
+void updateOSC() {
+  population.updateAwarenessNumbers();
+  sendEffect(population.unawareness, population.activity);
+}
 
 void initOSC() {
   // Initialize OSC objects and address
@@ -63,11 +66,6 @@ void oscEvent(OscMessage oscMsg) {
     openHand = oscMsg.get(2).intValue();
     println("handPosX : "+ handPosX +" handposY : "+handPosY+ " openHand : "+ openHand);
   }
-  //println("### received an osc message. with address pattern "+ oscMsg.addrPattern());
-  
-
-
-
 }
 
 void sendEffect(float unawareness_perc, float activity){

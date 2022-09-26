@@ -5,6 +5,7 @@ String[] shortcuts = {
   "Press (A) to convert 1 random agent to Unaware state",
   "Press (1) to get into POSITIVE influence state",
   "Press (0) to get into NEGATIVE influence state",
+  "Press (Z) to toggle input mode (hand/mouse)",
   "Press (SPACE) to toggle DEBUG mode",
 };
 
@@ -44,35 +45,23 @@ void keyPressed() {
     DEBUG = !DEBUG;
   }
   
+  // (1): Enter input mode group positive
   if(key == '1') {
     addGroupPositiveInfluence();
   }
+  
+  // (0): Enter input mode group negative
   if(key == '0') {
     addGroupNegativeInfluence();
   }
-}
-
-
-void mousePressed() {
-  if (currentInput == MOUSE_INPUT){
-    if(currentState == STATE_GROUP_ACTIVE) {
-      boolean converted = false;
-    
-      converted = population.convertArea(mouseX, mouseY, INFLUENCE_DIAM/2, currentInfluence);
   
-      // If at least one converted, go back to idle state
-      if(converted) {
-        currentState = STATE_IDLE;
-      }
+  // (Z): Toggle input mode
+  if(key == 'z') {
+    if(currentInput == HAND_INPUT) {
+      currentInput = MOUSE_INPUT;
     }
-    if(currentState == STATE_SINGLE_ACTIVE) {
-      boolean converted = false;
-      
-      converted = population.convertSingle(mouseX, mouseY, INFLUENCE_DIAM/2, currentInfluence);
-  
-      // If at least one converted, go back to idle state
-      if(converted) {
-        currentState = STATE_IDLE;
-      }
-    }} 
+    else if(currentInput == MOUSE_INPUT) {
+      currentInput = HAND_INPUT;
+    }
+  }
 }

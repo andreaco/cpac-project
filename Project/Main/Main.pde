@@ -70,32 +70,10 @@ void draw() {
   if (!DEBUG) image(canvas, 0, 0, width, height);
   
   // GUI
+  updateInputXY();
+  updateOpenHandInput();
   drawGUI();
   
   // OSC effects
-  population.updateAwarenessNumbers();
-  sendEffect(population.unawareness, population.activity);
-  
-  if (openHand < 0 && currentState != STATE_IDLE && currentInput == HAND_INPUT){
-   if(currentState == STATE_GROUP_ACTIVE) {
-      boolean converted = false;
-    
-      converted = population.convertArea(handPosX, handPosY, INFLUENCE_DIAM/2, currentInfluence);
-  
-      // If at least one converted, go back to idle state
-      if(converted) {
-        currentState = STATE_IDLE;
-      }
-    }
-    if(currentState == STATE_SINGLE_ACTIVE) {
-      boolean converted = false;
-      
-      converted = population.convertSingle(handPosX, handPosY, INFLUENCE_DIAM/2, currentInfluence);
-  
-      // If at least one converted, go back to idle state
-      if(converted) {
-        currentState = STATE_IDLE;
-      }
-    }
-  }
+  updateOSC();
 }
