@@ -23,36 +23,23 @@ void updateInputXY() {
 void updateOpenHandInput() {
   
   if (openHand < 0 && currentState != STATE_IDLE && currentInput == HAND_INPUT){
-   if(currentState == STATE_GROUP_ACTIVE) {
-      boolean converted = false;
-    
-      converted = population.convertArea(handPosX, handPosY, INFLUENCE_DIAM/2, currentInfluence);
-  
-      // If at least one converted, go back to idle state
-      if(converted) {
-        currentState = STATE_IDLE;
-      }
-    }
-    if(currentState == STATE_SINGLE_ACTIVE) {
-      boolean converted = false;
-      
-      converted = population.convertSingle(handPosX, handPosY, INFLUENCE_DIAM/2, currentInfluence);
-  
-      // If at least one converted, go back to idle state
-      if(converted) {
-        currentState = STATE_IDLE;
-      }
-    }
+    applyInfluence();
   }
 }
 
 
 void mousePressed() {
   if (currentInput == MOUSE_INPUT){
-    if(currentState == STATE_GROUP_ACTIVE) {
+    applyInfluence();
+  } 
+}
+
+// Apply influence in inputX, inputY position
+void applyInfluence() {
+  if(currentState == STATE_GROUP_ACTIVE) {
       boolean converted = false;
     
-      converted = population.convertArea(mouseX, mouseY, INFLUENCE_DIAM/2, currentInfluence);
+      converted = population.convertArea(inputX, inputY, INFLUENCE_DIAM/2, currentInfluence);
   
       // If at least one converted, go back to idle state
       if(converted) {
@@ -62,12 +49,11 @@ void mousePressed() {
     if(currentState == STATE_SINGLE_ACTIVE) {
       boolean converted = false;
       
-      converted = population.convertSingle(mouseX, mouseY, INFLUENCE_DIAM/2, currentInfluence);
+      converted = population.convertSingle(inputX, inputY, INFLUENCE_DIAM/2, currentInfluence);
   
       // If at least one converted, go back to idle state
       if(converted) {
         currentState = STATE_IDLE;
       }
     }
-  } 
 }
