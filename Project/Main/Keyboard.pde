@@ -8,7 +8,6 @@ String[] shortcuts = {
   "Press (SPACE) to toggle DEBUG mode",
 };
 
-
 void keyPressed() {
   
   // (W): 100 random agents get awareness +1.0f
@@ -55,25 +54,25 @@ void keyPressed() {
 
 
 void mousePressed() {
+  if (currentInput == MOUSE_INPUT){
+    if(currentState == STATE_GROUP_ACTIVE) {
+      boolean converted = false;
+    
+      converted = population.convertArea(mouseX, mouseY, INFLUENCE_DIAM/2, currentInfluence);
   
-  if(currentState == STATE_GROUP_ACTIVE) {
-    boolean converted = false;
-    
-    converted = population.convertArea(mouseX, mouseY, INFLUENCE_DIAM/2, currentInfluence);
-
-    // If at least one converted, go back to idle state
-    if(converted) {
-      currentState = STATE_IDLE;
+      // If at least one converted, go back to idle state
+      if(converted) {
+        currentState = STATE_IDLE;
+      }
     }
-  }
-  if(currentState == STATE_SINGLE_ACTIVE) {
-    boolean converted = false;
-    
-    converted = population.convertSingle(mouseX, mouseY, INFLUENCE_DIAM/2, currentInfluence);
-
-    // If at least one converted, go back to idle state
-    if(converted) {
-      currentState = STATE_IDLE;
-    }
-  } 
+    if(currentState == STATE_SINGLE_ACTIVE) {
+      boolean converted = false;
+      
+      converted = population.convertSingle(mouseX, mouseY, INFLUENCE_DIAM/2, currentInfluence);
+  
+      // If at least one converted, go back to idle state
+      if(converted) {
+        currentState = STATE_IDLE;
+      }
+    }} 
 }

@@ -10,7 +10,7 @@ int IN_PORT  = 55000;
 // Variables
 float handPosX = 0;
 float handPosY = 0;
-float indexDiff = 0; // difference between the pos of the tip of the index and its middle knuckle
+float openHand = 0; // difference between the pos of the tip of the index and its middle knuckle
 // used to determine if the hand is opened or closed
 
 
@@ -24,11 +24,6 @@ void initOSC() {
   
   // OUTPUT
   netAddress = new NetAddress("127.0.0.1",OUT_PORT);
-/*=======
-  oscP5 = new OscP5(this, 55000);
-  netAddress = new NetAddress("127.0.0.1",PORT);
-  //oscP5.plug(this,"test","/test");
->>>>>>> Stashed changes*/
 }
 
 // receive from python hand position
@@ -61,14 +56,18 @@ void oscEvent(OscMessage oscMsg) {
       println("Received reaction: "+ receivedInfluence);
       return;
     }  
-  } 
-  println("### received an osc message. with address pattern "+ oscMsg.addrPattern());
+  }
+  if(oscMsg.checkAddrPattern("/python/handTracking")==true) {
+    handPosX = width - oscMsg.get(0).floatValue() * width;
+    handPosY = oscMsg.get(1).floatValue() * height;
+    openHand = oscMsg.get(2).intValue();
+    println("handPosX : "+ handPosX +" handposY : "+handPosY+ " openHand : "+ openHand);
+  }
+  //println("### received an osc message. with address pattern "+ oscMsg.addrPattern());
   
-/*=======
-  handPosX = 1920 - oscMsg.get(0).intValue() * 1920 / 650;
-  handPosY = oscMsg.get(1).intValue() * 1080 / 500;
-  indexDiff = oscMsg.get(2).intValue();
->>>>>>> Stashed changes*/
+
+
+
 }
 
 void sendEffect(float unawareness_perc, float activity){

@@ -5,6 +5,9 @@ int INFLUENCE_NEGATIVE = -1;
 int INFLUENCE_POSITIVE = +1;
 int currentState = 0;
 int currentInfluence = 0;
+int currentInput = 0;
+int HAND_INPUT = 0;
+int MOUSE_INPUT = 1;
 
 PFont boldFont;
 float boxGUIWidth, boxGUIHeight;
@@ -50,7 +53,12 @@ void drawGUI() {
     else {
       fill(150, 150, 150, 100);
     }
-    ellipse(mouseX, mouseY, INFLUENCE_DIAM,  INFLUENCE_DIAM); 
+    if (MOUSE_INPUT == currentInput) {
+      ellipse(mouseX, mouseY, INFLUENCE_DIAM,  INFLUENCE_DIAM);
+    }
+    if (HAND_INPUT == currentInput) {
+      ellipse(handPosX, handPosY, INFLUENCE_DIAM,  INFLUENCE_DIAM);
+    }
   }
   else {
     if(currentState != STATE_IDLE) {
@@ -70,10 +78,20 @@ void drawGUI() {
         else {
            fill(150, 150, 150, 5);
         }
-         
-        ellipse(mouseX, mouseY, INFLUENCE_DIAM*perc,  INFLUENCE_DIAM*perc);
+        
+        if (currentInput == MOUSE_INPUT){
+          ellipse(mouseX, mouseY, INFLUENCE_DIAM*perc,  INFLUENCE_DIAM*perc);
+        }
+        if (currentInput == HAND_INPUT){
+          ellipse(handPosX, handPosY, INFLUENCE_DIAM*perc,  INFLUENCE_DIAM*perc);
+        }
       }
-      population.highlightArea(mouseX, mouseY, INFLUENCE_DIAM/2);
+      if (currentInput == MOUSE_INPUT){
+        population.highlightArea(mouseX, mouseY, INFLUENCE_DIAM/2);
+      }
+      if (currentInput == HAND_INPUT){
+        population.highlightArea(handPosX, handPosY, INFLUENCE_DIAM/2);
+      }
       popStyle();
     }
   }
