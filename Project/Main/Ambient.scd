@@ -1,4 +1,7 @@
 (
+
+NetAddr("127.0.0.1",57120);
+
 SynthDef(\airportAmb, {
 	arg hz=440,amp=0.5, outBus = 0, effectBus, direct = 0.9,cutoff=200;
 	var note=hz.cpsmidi;
@@ -121,7 +124,7 @@ SynthDef(\pinkNoise, { arg outBus = 0, mul = 0.02;
 
 
 SynthDef(\bell, {
-	|fs=1, t60=1, pitchy=1, amp=0.25, gate=1|
+	|fs=1, t60=1, pitchy=1, amp=0.4, gate=1|
 	var sig, exciter;
 	//exciter = Impulse.ar(0);
 	exciter = WhiteNoise.ar() * EnvGen.ar(Env.perc(0.001, 0.05), gate) * 0.25;
@@ -133,8 +136,8 @@ SynthDef(\bell, {
 		],
 		exciter,
 		freqscale:fs*pitchy);
-	sig = FreeVerb.ar(sig) * amp;
-	DetectSilence.ar(sig, 0.005, 0.001, doneAction:2);
+	sig = FreeVerb.ar(sig,0.8,0.8,0) * amp;
+	DetectSilence.ar(sig, 0.001, 2, doneAction:2);
 	//sig = InsideOut.ar(sig,0.02);
 	Out.ar(0, sig!2);
 }).add;
@@ -142,34 +145,12 @@ SynthDef(\bell, {
 
 b = Bus.audio(s,2); // this will be our effects bus
 
-)
-
-(
+// Start the AmbientSynth and distortion effect bus
 x = Synth.new("distortion", [\inBus, b]);
 y = Synth.before(x, "airportAmb", [\effectBus, b]);
-)
-z = Synth(\pinkNoise);
-
-(
-Pbind(
-	\instrument, \bell,
-	\fs, Pseq( [60,64,72], 1).midicps,
-	\t60, 0.5,
-	\pitchy, 2,
-	\dur, 0.15
-).play;
-)
 
 
-x.set(\mul, 0.01); // map this beween 0 and 0.02
-y.set(\direct,1);
-y.set(\cutoff, 200); // controls the LPF cutoff
-z.set(\mul, 0.02); // map this also between 0 and 0.02 maybe a little more
-
-
-NetAddr("127.0.0.1",57120);
-
-( // RECEIVER 3: PROCESSING ONLY
+// OSC Receiver from the world state
 OSCdef('OSCreceiver',
 	{
 		arg msg;
@@ -186,9 +167,52 @@ OSCdef('OSCreceiver',
 
 		unawareness.postln;
 		activity.postln;
-		// map the infectivity between 0 and 0.02
-		//x.set(\mul,unawareness);
-		//z.set(\mul,unawareness);
 	},
-	"/note_effect");
+	"/supercollider/note_effect");
+
+// OSC Receiver from the news interaction
+OSCdef('OSCreceiver2',
+	{
+		arg msg;
+
+		if ( msg[1]=="positive",
+			{ Pbind(
+					\instrument, \bell,
+					\fs, Pseq( [66], 1).midicps,
+					\t60, 0.5,
+					\pitchy, 2,
+					\dur, 0.15
+				).play;}    // false function
+		)
+		if ( msg[1] == "negative",
+			,    // true function
+			{ z = Synth(\pinkNoise); }
+		)
+	},
+	"/supercollider/notification");
+
 )
+
+// Play the pink Noise when a fake news is selected
+z = Synth(\pinkNoise);
+
+// Play a sound when selecting a real news
+(
+Pbind(
+	\instrument, \bell,
+	\fs, Pseq( [66], 1).midicps,
+	\t60, 0.5,
+	\pitchy, 2,
+	\dur, 0.15
+).play;
+)
+
+
+// Controls to interact with the music
+x.set(\mul, 0.01); // map this beween 0 and 0.02
+y.set(\direct,1);
+y.set(\cutoff, 200); // controls the LPF cutoff
+z.set(\mul, 0.02); // map this also between 0 and 0.02 maybe a little more
+
+
+
