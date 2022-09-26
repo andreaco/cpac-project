@@ -165,8 +165,8 @@ OSCdef('OSCreceiver',
 		x.set(\mul, unawareness);
 		y.set(\cutoff, activity);
 
-		unawareness.postln;
-		activity.postln;
+		//unawareness.postln;
+		//activity.postln;
 	},
 	"/supercollider/note_effect");
 
@@ -174,8 +174,7 @@ OSCdef('OSCreceiver',
 OSCdef('OSCreceiver2',
 	{
 		arg msg;
-
-		if ( msg[1]=="positive",
+		if ( msg[1] == 1,
 			{ Pbind(
 					\instrument, \bell,
 					\fs, Pseq( [66], 1).midicps,
@@ -183,11 +182,10 @@ OSCdef('OSCreceiver2',
 					\pitchy, 2,
 					\dur, 0.15
 				).play;}    // false function
-		)
-		if ( msg[1] == "negative",
-			,    // true function
+		);
+		if ( msg[1] == -1,
 			{ z = Synth(\pinkNoise); }
-		)
+		);
 	},
 	"/supercollider/notification");
 
