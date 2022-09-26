@@ -29,7 +29,7 @@ void updateOpenHandInput() {
 
 
 void mousePressed() {
-  if (currentInput == MOUSE_INPUT){
+  if (currentState != STATE_IDLE && currentInput == MOUSE_INPUT){
     applyInfluence();
   } 
 }
@@ -43,6 +43,7 @@ void applyInfluence() {
   
       // If at least one converted, go back to idle state
       if(converted) {
+        sendNotificationSound(0);
         currentState = STATE_IDLE;
       }
     }
@@ -53,6 +54,7 @@ void applyInfluence() {
   
       // If at least one converted, go back to idle state
       if(converted) {
+        sendNotificationSound(0);
         currentState = STATE_IDLE;
       }
     }

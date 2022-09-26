@@ -18,8 +18,8 @@ City city;
 
 void setup() {
   // Screen Size
-  size(860, 720);
-  //fullScreen();
+  //size(860, 720);
+  fullScreen();
   
   // Processing Settings
   smooth(8);

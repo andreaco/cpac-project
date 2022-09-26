@@ -64,7 +64,7 @@ void oscEvent(OscMessage oscMsg) {
     handPosX = width - oscMsg.get(0).floatValue() * width;
     handPosY = oscMsg.get(1).floatValue() * height;
     openHand = oscMsg.get(2).intValue();
-    println("handPosX : "+ handPosX +" handposY : "+handPosY+ " openHand : "+ openHand);
+    //println("handPosX : "+ handPosX +" handposY : "+handPosY+ " openHand : "+ openHand);
   }
 }
 
@@ -84,27 +84,27 @@ void sendNotificationSound(int influence){
 
 
 void addGroupPositiveInfluence() {
-  sendNotificationSound(1);
+  sendNotificationSound(INFLUENCE_POSITIVE);
   println("Adding positive influence..");
   currentState = STATE_GROUP_ACTIVE;
   currentInfluence = INFLUENCE_POSITIVE;
 }
 
 void addSinglePositiveInfluence() {
-  sendNotificationSound(1);
+  sendNotificationSound(INFLUENCE_POSITIVE);
   println("Adding positive influence..");
   currentState = STATE_SINGLE_ACTIVE;
   currentInfluence = INFLUENCE_POSITIVE;
 }
 
 void addGroupNegativeInfluence() {
-  sendNotificationSound(-1);
+  sendNotificationSound(INFLUENCE_NEGATIVE);
   println("Adding negative influence..");
   currentState = STATE_GROUP_ACTIVE;
   currentInfluence = INFLUENCE_NEGATIVE;
 }
 void addSingleNegativeInfluence() {
-  sendNotificationSound(-1);
+  sendNotificationSound(INFLUENCE_NEGATIVE);
   println("Adding negative influence..");
   currentState = STATE_SINGLE_ACTIVE;
   currentInfluence = INFLUENCE_NEGATIVE;

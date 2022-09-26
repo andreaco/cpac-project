@@ -147,7 +147,7 @@ b = Bus.audio(s,2); // this will be our effects bus
 
 // Start the AmbientSynth and distortion effect bus
 x = Synth.new("distortion", [\inBus, b]);
-y = Synth.before(x, "airportAmb", [\effectBus, b]);
+y = Synth.after(x, "airportAmb", [\effectBus, b]);
 
 
 // OSC Receiver from the world state
@@ -185,6 +185,15 @@ OSCdef('OSCreceiver2',
 		);
 		if ( msg[1] == -1,
 			{ z = Synth(\pinkNoise); }
+		);
+        if ( msg[1] == 0,
+			{ Pbind(
+					\instrument, \bell,
+					\fs, Pseq( [44], 1).midicps,
+					\t60, 0.5,
+					\pitchy, 2,
+					\dur, 0.15
+				).play; }
 		);
 	},
 	"/supercollider/notification");
