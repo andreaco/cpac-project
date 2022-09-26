@@ -1,5 +1,6 @@
 int STATE_IDLE = 0;
-int STATE_ACTIVE = 1;
+int STATE_GROUP_ACTIVE = 1;
+int STATE_SINGLE_ACTIVE = 2;
 int INFLUENCE_NEGATIVE = -1;
 int INFLUENCE_POSITIVE = +1;
 int currentState = 0;
@@ -40,10 +41,10 @@ void drawGUI() {
     }
     popStyle();
     
-    if(currentState == STATE_ACTIVE && currentInfluence == INFLUENCE_POSITIVE) {
+    if(currentState != STATE_IDLE && currentInfluence == INFLUENCE_POSITIVE) {
        fill(150, 150, 255, 100);
     }
-    else if (currentState == STATE_ACTIVE && currentInfluence == INFLUENCE_NEGATIVE) {
+    else if (currentState != STATE_IDLE && currentInfluence == INFLUENCE_NEGATIVE) {
        fill(255, 150, 150, 100);
     }
     else {
@@ -52,7 +53,7 @@ void drawGUI() {
     ellipse(mouseX, mouseY, INFLUENCE_DIAM,  INFLUENCE_DIAM); 
   }
   else {
-    if(currentState == STATE_ACTIVE) {
+    if(currentState != STATE_IDLE) {
       pushStyle();
       fill(0, 100);
       rect(0, 0, width, height);
