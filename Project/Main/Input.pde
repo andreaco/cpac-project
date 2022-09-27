@@ -24,6 +24,7 @@ void updateOpenHandInput() {
   
   if (openHand < 0 && currentState != STATE_IDLE && currentInput == HAND_INPUT){
     applyInfluence();
+    openHand=0;
   }
 }
 

@@ -101,8 +101,8 @@ SynthDef(\airportAmb, {
     Out.ar(effectBus, output * (1 - direct));
 }).add;
 
-//Distortion effect
 
+//Distortion effect
 SynthDef(\distortion, {arg amp = 0, smooth=0.5, outBus = 0,mul=0.00, inBus;
 	var input;
 	input = In.ar(inBus, 1);
@@ -111,18 +111,19 @@ SynthDef(\distortion, {arg amp = 0, smooth=0.5, outBus = 0,mul=0.00, inBus;
 	Out.ar(outBus,[input,input]);
 }).add;
 
-SynthDef(\pinkNoise, { arg outBus = 0, mul = 0.02;
+//Pink Noise effect for bad notifications
+SynthDef(\pinkNoise, { arg outBus = 0, mul = 0.4;
     var trig=1, seq, freq, signal,env, dur = 2.5;
 	env = EnvGen.kr(Env.new([1, 1, 0], [dur-0.02, dur]), doneAction:2);
     trig = Impulse.kr(10);
 	seq = Drand([0.4,0.5,0.6,0.7,0.8,0.9], inf);
     freq = Demand.kr(trig, 0, seq);
-	signal = PinkNoise.ar  * LFPulse.kr(freq,0) * mul;
-	signal = InsideOut.ar(signal,0.015) * env;
+	signal = PinkNoise.ar  * LFPulse.kr(freq,0);
+	signal = InsideOut.ar(signal,0.015) * env  * mul;
 	Out.ar(outBus, [signal,signal]); // maybe pan it!
 }).add;
 
-
+// bell instrument for good notifications
 SynthDef(\bell, {
 	|fs=1, t60=1, pitchy=1, amp=0.4, gate=1|
 	var sig, exciter;
@@ -147,7 +148,7 @@ b = Bus.audio(s,2); // this will be our effects bus
 
 // Start the AmbientSynth and distortion effect bus
 x = Synth.new("distortion", [\inBus, b]);
-y = Synth.after(x, "airportAmb", [\effectBus, b]);
+y = Synth.before(x, "airportAmb", [\effectBus, b]);
 
 
 // OSC Receiver from the world state
@@ -159,7 +160,7 @@ OSCdef('OSCreceiver',
 		unawareness=msg[1];
 		activity=msg[2];
 
-		unawareness = unawareness*0.02;
+		unawareness = unawareness*0.005;
 		activity = 500 * (activity + 0.2);
 
 		x.set(\mul, unawareness);
@@ -198,20 +199,6 @@ OSCdef('OSCreceiver2',
 	},
 	"/supercollider/notification");
 
-)
-
-// Play the pink Noise when a fake news is selected
-z = Synth(\pinkNoise);
-
-// Play a sound when selecting a real news
-(
-Pbind(
-	\instrument, \bell,
-	\fs, Pseq( [66], 1).midicps,
-	\t60, 0.5,
-	\pitchy, 2,
-	\dur, 0.15
-).play;
 )
 
 
