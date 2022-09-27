@@ -1,4 +1,4 @@
-# Creative Programming and Computing Project
+# INFAKETION
 
 
 ## Scenario and Motivation
