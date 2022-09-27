@@ -3,7 +3,7 @@
 NetAddr("127.0.0.1",57120);
 
 SynthDef(\airportAmb, {
-	arg hz=440,amp=0.5, outBus = 0, effectBus, direct = 0.9,cutoff=200;
+	arg hz=440,amp=0.5, outBus = 0, effectBus, direct = 0.9;
 	var note=hz.cpsmidi;
 	var snd,snd2,intro, output;
 
@@ -89,7 +89,6 @@ SynthDef(\airportAmb, {
 
 	//Low pass
 	output = (snd2*0.1+snd)*amp;
-	output = LPF.ar(output,cutoff);
 
 	//extra reverb
 	output = FreeVerb2.ar(output,output, 1, 0.9, 0);
@@ -99,6 +98,14 @@ SynthDef(\airportAmb, {
 	Out.ar(outBus, output * direct);
     // this will be our effects output
     Out.ar(effectBus, output * (1 - direct));
+}).add;
+
+//LowPass effect
+SynthDef(\lowPass , {arg cutoff = 200, inBus;
+	var output, input;
+	input = In.ar(inBus, 1);
+	output = LPF.ar(input,cutoff);
+	Out.ar(0,[output,output]);
 }).add;
 
 
@@ -147,7 +154,8 @@ SynthDef(\bell, {
 b = Bus.audio(s,2); // this will be our effects bus
 
 // Start the AmbientSynth and distortion effect bus
-x = Synth.new("distortion", [\inBus, b]);
+w = Synth.new("lowPass", [\inBus, b]);
+x = Synth.before(w, "distortion", [\inBus, b, \outBus, b]);
 y = Synth.before(x, "airportAmb", [\effectBus, b]);
 
 
@@ -160,11 +168,11 @@ OSCdef('OSCreceiver',
 		unawareness=msg[1];
 		activity=msg[2];
 
-		unawareness = unawareness*0.005;
+		unawareness = unawareness*0.4;
 		activity = 500 * (activity + 0.2);
 
 		x.set(\mul, unawareness);
-		y.set(\cutoff, activity);
+		w.set(\cutoff, activity);
 
 		//unawareness.postln;
 		//activity.postln;
