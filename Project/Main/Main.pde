@@ -1,12 +1,17 @@
 PGraphics canvas;
 
 // Init constants
-int STARTING_AGENTS = 500; 
+int STARTING_AGENTS = 500;
+
+// City constants
 int CITY_ROWS = 50;
 int CITY_COLS = 50;
 
-float INFLUENCE_DIAM = 75;
+// To be tuned based on the situation
+float INFECTION_RATIO = 0.001;
 
+// Area of influence during interaction mode
+float INFLUENCE_DIAM = 75;
 
 // DEBUG MODE
 boolean DEBUG = false;
@@ -18,8 +23,8 @@ City city;
 
 void setup() {
   // Screen Size
-  //size(860, 720);
-  fullScreen();
+  size(860, 720);
+  //fullScreen();
   
   // Processing Settings
   smooth(8);

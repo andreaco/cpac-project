@@ -41,7 +41,9 @@ void oscEvent(OscMessage oscMsg) {
       String influenceSize = oscMsg.get(1).stringValue();
       if(receivedInfluence.equals("positiveMessage")) {
         if(influenceSize.equals("single")) {
-          addSinglePositiveInfluence();
+          Agent a = population.getRandomAgent();
+          a.awareness = INFLUENCE_POSITIVE;
+          sendNotificationSound(INFLUENCE_POSITIVE);
         }
         else {
           addGroupPositiveInfluence();
@@ -49,7 +51,9 @@ void oscEvent(OscMessage oscMsg) {
       }
       if(receivedInfluence.equals("negativeMessage")) {
         if(influenceSize.equals("single")) {
-          addSingleNegativeInfluence();
+          Agent a = population.getRandomAgent();
+          a.awareness = INFLUENCE_NEGATIVE;
+          sendNotificationSound(INFLUENCE_NEGATIVE);
         }
         else {
           addGroupNegativeInfluence();

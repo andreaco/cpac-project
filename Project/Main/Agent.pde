@@ -72,10 +72,10 @@ class Agent {
       // Infection
       if (direction.length() > 0 && direction.length() < INFECT_DIST) {
          if (other.awareness > 0.5) {
-           awareness += 0.001;
+           awareness += INFECTION_RATIO;
          }
          else if (other.awareness < -0.5) {
-           awareness -= 0.001;
+           awareness -= INFECTION_RATIO;
          }
          awareness = constrain(awareness, -1, 1);
        }
