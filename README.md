@@ -68,7 +68,10 @@ The profile ID’s, names and surnames of people, usernames, and the profile pic
 
 Each time a button is pressed by the user, the reliability tag of that particular entry is searched and compared with the user's answer. Whether the user answer is accurate or not a different animation is played, fire for wrong answer and water for true answer, and an accompanying message that lets the user know if they decided correctly. In each case, a different OSC message is prepared with the tag “/website/news”.
 
-The background animation was taken and slightly altered from here.
+The following is a screenshot illustrating an headline in the website
+
+![website_example_img](https://user-images.githubusercontent.com/33195819/192831692-04024f2f-a18b-4224-af57-32fc7800ea28.png)
+
 
 ## Processing
 
@@ -88,7 +91,9 @@ Agents in the same category follow the alignment rule.
 Aware and unaware agents infect neighbouring agents based on their awareness.
 
 To make the world more appealing the walls are made invisible and the agents emit a slowly fading light which, depending on their awareness, paint the canvas with their ideology. We used a water texture to take the different colours of aware agents and a fire texture for unaware agents. Below is a figure showing the world and a debug mode where the structure is more clear.
+
 ![processingWorld](https://user-images.githubusercontent.com/33195819/192827564-6b8f810d-565e-4b56-9335-022c4485b746.png)
+
 ![processingDebug](https://user-images.githubusercontent.com/33195819/192828809-10b0bc9d-47b0-4c45-b87a-49ef5c65fbd2.png)
 
 
@@ -118,6 +123,9 @@ The pink noise on the other hand is an inharmonic and distorted sound that shows
 - ```pythonosc``` library for sending osc messages from Python
 
 The Hand Tracking software takes the camera input exploiting open-cv,  and feeds the input image to a wrapper class to the MediaPipe library. The library exposes a simple interface to track hands and gather the position of the main joints. After retrieving the joints position we are able to send to Processing, via OSC, the position of the hand and the difference over the Y axis between the tip of the index finger and its knuckle. The hand is considered as closed while the difference is positive, and open when the difference is negative. Processing will later process this data, while in “Share State” to allow the user to drop the news in the canvas by opening his hand.
+
 ![openHand](https://user-images.githubusercontent.com/33195819/192829653-9eaad963-f976-4ae4-a5f8-01e06fb061e9.png)
+
 ![closedHand](https://user-images.githubusercontent.com/33195819/192829677-67b5cb7f-0784-40f5-9ed6-39949cb2faaa.png)
+
 
