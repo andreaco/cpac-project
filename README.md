@@ -70,12 +70,6 @@ Each time a button is pressed by the user, the reliability tag of that particula
 
 The background animation was taken and slightly altered from here.
 
-To run the website and be able to send messages to Processing the bridge.js must be run on node.js in parallel in the same appropriate folder as the main HTML file. Bridge.js hosts a server at http://127.0.0.1:8081 and a client connection that connects the OSC messages coming from the website via a socket. In parallel, it relays the message to the client, which represents Processing, via another socket. The client and server uses ports 60000 and 55000 and the same host to not mix up incoming and outgoing messages. The message and status messages are then tagged differently to let Processing easily identify incoming data and are sent using the socket.emit function.
-
- 
-### OSC 
-To run the website and be able to send messages to Processing the bridge.js must be run on node.js in parallel in the same appropriate folder as the main HTML file.  
-
 ## Processing
 
 **Dependencies**
