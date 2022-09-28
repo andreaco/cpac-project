@@ -96,8 +96,7 @@ To make the world more appealing the walls are made invisible and the agents emi
 
 ![processingDebug](https://user-images.githubusercontent.com/33195819/192828809-10b0bc9d-47b0-4c45-b87a-49ef5c65fbd2.png)
 
-
-## Supercollider
+## SuperCollider
 
 **Dependencies**
 - ```sc3``` extension for some distortion and reverb effects
@@ -105,7 +104,6 @@ To make the world more appealing the walls are made invisible and the agents emi
 The background music to support the installation is made in SuperCollider following the structure shown in the diagram below:
 
 ![supercolliderDiagram](https://user-images.githubusercontent.com/33195819/192829382-00fce77e-d822-4522-8f33-e67c1410170a.png)
-
 
 The AmbientSynth is an infinite generative song based on Eno's Music for Airports taken from “infinite_digits'' example on sccode.org. The instrument is modified with effects and its arguments are updated to react to the world’s state through OSC.
 
