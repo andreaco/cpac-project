@@ -18,9 +18,6 @@ Conversely, if real news is introduced to the world, agents will spread the info
 \
 We had multiple ratings associated with user response from group-negative to group-positive with single-negative and single-positive in between . For example, sharing a fake-news is more harmful to the spread of misinformation than just liking it and it sends a group negative instead of single-negative. Similarly sharing a fact is more beneficial to the system than just liking it.\
 
-WHAT THE USER SEES/HEARS: THE IMAGE CHANGE AND THE SOUND CHANGE EXPLANATION:::
-
-
 ## How to run
 The project is composed of different components\ 
 - Main Canvas (Processing Script)
@@ -32,7 +29,9 @@ The project is composed of different components\
 
 The communication between the different components is displayed in the following picture.
 The schematic architecture is the following:
-![Overall Diagram](images/overall_diagram.png)
+
+![overall_diagram](https://user-images.githubusercontent.com/33195819/192827365-48565b16-8070-4177-a2ca-53e1b7167553.png)
+
 To run the performance:
 1. From root folder run the node bridge script as ```node Project/Website/bridge.js```
 2. Head to https://umutus15.github.io/#.
@@ -63,8 +62,11 @@ The profile ID’s, names and surnames of people, usernames, and the profile pic
 Each time a button is pressed by the user, the reliability tag of that particular entry is searched and compared with the user's answer. Whether the user answer is accurate or not a different animation is played, fire for wrong answer and water for true answer, and an accompanying message that lets the user know if they decided correctly. In each case, a different OSC message is prepared with the tag “/website/news”.\ 
 \ 
 The background animation was taken and slightly altered from here.\ 
+
+To run the website and be able to send messages to Processing the bridge.js must be run on node.js in parallel in the same appropriate folder as the main HTML file. Bridge.js hosts a server at http://127.0.0.1:8081 and a client connection that connects the OSC messages coming from the website via a socket. In parallel, it relays the message to the client, which represents Processing, via another socket. The client and server uses ports 60000 and 55000 and the same host to not mix up incoming and outgoing messages. The message and status messages are then tagged differently to let Processing easily identify incoming data and are sent using the socket.emit function.
+
  
-OSC 
+### OSC 
 To run the website and be able to send messages to Processing the bridge.js must be run on node.js in parallel in the same appropriate folder as the main HTML file.  
 
 ## Processing
@@ -85,9 +87,10 @@ Agents in the same category follow the alignment rule.\
 Aware and unaware agents infect neighbouring agents based on their awareness.\ 
 \ 
 To make the world more appealing the walls are made invisible and the agents emit a slowly fading light which, depending on their awareness, paint the canvas with their ideology. We used a water texture to take the different colours of aware agents and a fire texture for unaware agents. Below is a figure showing the world and a debug mode where the structure is more clear.\ 
-
-![Main View](images/processingWorld.png)
-![Debug View](images/processingDebug.png)
+Main View
+![processingWorld](https://user-images.githubusercontent.com/33195819/192827564-6b8f810d-565e-4b56-9335-022c4485b746.png)
+Debug View
+![processingDebug](https://user-simages.githubusercontent.com/33195819/192827630-4d421853-fe78-4206-ba5a-04d23e30f0e8.png)
 
 
 ## Supercollider
@@ -95,9 +98,10 @@ To make the world more appealing the walls are made invisible and the agents emi
 **Dependencies**
 - ```sc3``` extension for some distortion and reverb effects
 
-The background music to support the installation is made in supercollider following the structure shown in the diagram below:
+The background music to support the installation is made in SuperCollider following the structure shown in the diagram below:
 
-![supercolliderDiagram](images/supercolliderDiagram.png)
+![supercolliderDiagram](https://user-images.githubusercontent.com/33195819/192827776-f7c11a43-e523-4f47-a2b1-303ef4f2464a.png SuperCollider)
+
 
 The AmbientSynth is an infinite generative song based on Eno's Music for Airports taken from “infinite_digits'' example on sccode.org. The instrument is modified with effects and its arguments are updated to react to the world’s state through OSC.\ 
 In fact, since misinformation can be thought of as increasing the signal to noise ratio of a harmonic sound, the awareness of the world defined as the ratio of aware agents to aware + unaware agents controls the amount of noise and distortion of the music through the effect bus.\ 
