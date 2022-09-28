@@ -2,7 +2,7 @@
 
 
 ## Scenario and Motivation
-Our project proposal is an installation aimed at spreading awareness about misinformation.
+INFAKETION is an installation aimed at spreading awareness about misinformation.
 During the last few years, the concept of ‘fake news’ has emerged as an important source of societal concern, being consequential in politics, and in other topics like public health like the numerous erroneous reports perpetuated during the COVID19 pandemic. As such the concept of ‘fake news’ has been used as a tool for manipulation of the outcomes of many democratic processes.
 
 **What is true?** This topic is highly controversial and there’s no easy solution to it.[1]
