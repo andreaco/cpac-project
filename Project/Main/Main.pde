@@ -1,7 +1,7 @@
 PGraphics canvas;
 
 // Init constants
-int STARTING_AGENTS = 500;
+int STARTING_AGENTS = 800;
 
 // City constants
 int CITY_ROWS = 50;
@@ -23,8 +23,8 @@ City city;
 
 void setup() {
   // Screen Size
-  size(860, 720);
-  //fullScreen();
+  //size(860, 720);
+  fullScreen();
   
   // Processing Settings
   smooth(8);
@@ -72,6 +72,7 @@ void draw() {
   
   // End drawing on canvas and display it
   canvas.endDraw();
+  
   if (!DEBUG) image(canvas, 0, 0, width, height);
   
   // GUI

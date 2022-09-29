@@ -5,6 +5,9 @@ float WALL_AVOID_DIST= 2;
 float ALIGN_DIST=3;
 float INFECT_DIST = 2;
 
+// Adjust depending on the projection
+float SIZE_SCALAR = 3.0f;
+
 // Agents Physical Constants
 float MAX_VEL = 12;
 float MAX_FORCE = 1.2; 
@@ -177,7 +180,7 @@ class Agent {
         
         // Light Source 
         canvas.fill(awareColor, 20);
-        canvas.ellipse(position.x, position.y, RADIUS_AGENT, RADIUS_AGENT);
+        canvas.ellipse(position.x, position.y, SIZE_SCALAR*RADIUS_AGENT, SIZE_SCALAR*RADIUS_AGENT);
       }
       else {
         fill(0, 255, 0);
@@ -191,7 +194,7 @@ class Agent {
         // TODO: tune the visibility of neutral agents
         float visibility = 50;
         canvas.fill(visibility, 10);
-        canvas.ellipse(position.x, position.y, RADIUS_AGENT, RADIUS_AGENT);
+        canvas.ellipse(position.x, position.y, SIZE_SCALAR*RADIUS_AGENT, SIZE_SCALAR*RADIUS_AGENT);
       }
       else {
         fill(200, 200, 200);
@@ -211,7 +214,7 @@ class Agent {
         
         // Light Source 
         canvas.fill(unawareColor, 20);
-        canvas.ellipse(position.x, position.y, RADIUS_AGENT, RADIUS_AGENT);
+        canvas.ellipse(position.x, position.y, SIZE_SCALAR*RADIUS_AGENT, SIZE_SCALAR*RADIUS_AGENT);
       }
       else {
         fill(255, 0, 0);
